@@ -1,0 +1,218 @@
+/* ==========================================================================
+   THE SANIYA ARCHIVE — identity.css
+   Stage 05 · Identity & Passport Module Specific Styles
+   --------------------------------------------------------------------------
+   Handles the 3D perspective wrapper, card flip logic, embossed cover 
+   details, and precise print styling.
+   ========================================================================== */
+
+/* ---- 1. Passport 3D Stage & Wrapper ---- */
+.passport-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  perspective: 2000px; /* Strong perspective for realistic 3D */
+  padding-block: var(--sp-4);
+}
+
+.passport-container {
+  position: relative;
+  width: 100%;
+  max-width: 32rem;
+  /* Natural height dictated by the internal relative face */
+}
+
+/* The inner rotatable object */
+.passport-inner {
+  position: relative;
+  width: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.45, 0.05, 0.15, 1);
+}
+
+/* ---- 2. Passport Faces ---- */
+.passport-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius-1);
+  box-shadow: var(--shadow-3);
+}
+
+/* Front Inside (Identity Page). Position relative gives the container its height. */
+.passport-front {
+  position: relative;
+  width: 100%;
+  z-index: 2;
+  transform: rotateY(0deg);
+  padding: var(--sp-5);
+}
+
+/* Back Inside (Authorization Record). Absolute to map to the front's boundaries. */
+.passport-back {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  transform: rotateY(180deg);
+}
+
+/* Outer Cover. Attached via a left-edge hinge. */
+.passport-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  transform-origin: left center;
+  transition: transform 0.9s cubic-bezier(0.45, 0.05, 0.15, 1), opacity 0.5s ease 0.2s, z-index 0s linear 0.4s;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: var(--sp-6);
+  background-image: var(--tx-weave), var(--tx-grain);
+  background-size: 8px 8px, 240px 240px;
+}
+
+/* ---- 3. Interactive States (Controlled by JS) ---- */
+/* When opened, cover swings left 180 degrees and fades to reveal the front */
+.passport-container.is-open .passport-cover {
+  transform: rotateY(-175deg); /* Slight angle gives thickness */
+  opacity: 0;
+  z-index: 0;
+}
+
+/* When flipped, the entire internal wrapper rotates to show the back */
+.passport-container.is-flipped .passport-inner {
+  transform: rotateY(180deg);
+}
+
+/* Hover hint for the cover */
+@media (hover: hover) and (pointer: fine) {
+  .passport-container:not(.is-open) .passport-cover:hover {
+    transform: rotateY(-5deg);
+    cursor: pointer;
+  }
+}
+
+/* ---- 4. Visual Details & Typography ---- */
+/* Subtle gold embossing for the dark cover */
+.embossed-text-gold {
+  color: var(--gold-light);
+  text-shadow: 
+    1px 1px 0px rgba(255, 255, 255, 0.15),
+    -1px -1px 0px rgba(0, 0, 0, 0.4);
+}
+
+/* Faint background institutional emblems */
+.watermark {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16rem;
+  color: var(--border-ink);
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.passport-grid {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: var(--sp-5);
+  position: relative;
+  z-index: 2;
+}
+
+.security-text {
+  font-family: var(--font-doc);
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  border-top: 1px dotted var(--border-soft);
+  padding-top: var(--sp-2);
+}
+
+/* Lists styling for Authorizations */
+.auth-list li {
+  padding-left: var(--sp-3);
+  text-indent: -1.2rem;
+  margin-bottom: var(--sp-2);
+}
+
+/* Remove horizontal scroll on mobile caused by 3D transforms */
+body {
+  overflow-x: hidden;
+}
+
+/* ---- 5. Responsive Adjustments ---- */
+@media (max-width: 599px) {
+  .passport-grid {
+    grid-template-columns: 1fr; /* Stack portrait and fields on small screens */
+  }
+  .passport-front, .passport-back {
+    padding: var(--sp-4);
+  }
+  .cover-content h2 {
+    font-size: 1.8rem !important;
+  }
+  .passport-controls {
+    flex-direction: column;
+    width: 100%;
+    gap: var(--sp-3);
+  }
+  .passport-controls button {
+    width: 100%;
+  }
+}
+
+/* ---- 6. Print Stylesheet ---- */
+@media print {
+  /* Hide the web shell entirely */
+  .no-print, .archive-header, .module-intro, .passport-controls, .archival-info {
+    display: none !important;
+  }
+  
+  /* Reset the body */
+  body, .surface-grain {
+    background: white !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .passport-stage {
+    padding: 0 !important;
+    perspective: none !important;
+  }
+  
+  /* Flatten the 3D structure for A4 rendering */
+  .passport-container, .passport-inner {
+    transform: none !important;
+    transition: none !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  .passport-face {
+    position: relative !important;
+    transform: none !important;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    margin-bottom: 2rem !important;
+    page-break-inside: avoid;
+  }
+
+  /* Don't print the dark cover to save user ink */
+  .passport-cover {
+    display: none !important;
+  }
+
+  .passport-front, .passport-back {
+    display: block !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* Ensure background textures and colors render if browser settings permit */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
