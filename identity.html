@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#29372C">
+  <title>Identity & Credentials · The Saniya Archive</title>
+  <meta name="description" content="Official travel credential issued by the International Department of Unscheduled Adventures.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@600;700;800&family=Reenie+Beanie&family=Special+Elite&display=swap" rel="stylesheet">
+
+  <!-- Core Design System -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  
+  <!-- Identity Module Specific Styles -->
+  <link rel="stylesheet" href="css/identity.css">
+</head>
+<body class="surface-grain page-enter">
+  <a class="skip-link" href="#passport-stage">Skip to document</a>
+
+  <!-- Header -->
+  <header class="archive-header surface-forest no-print">
+    <div class="container container--max header-inner">
+      <div class="header-brand">
+        <a href="dashboard.html" class="btn btn--secondary btn--sm on-dark" style="border-color: var(--border-on-dark); color: var(--text-inverse-muted);" aria-label="Return to Dashboard">
+          ← <span class="t-doc hidden-mobile" style="margin-left: 0.5rem;">DASHBOARD</span>
+        </a>
+      </div>
+      <div class="header-meta">
+        <span class="header-indicator">SECTOR: IDENTITY & CREDENTIALS</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container container--content section">
+    
+    <!-- Module Introduction -->
+    <section class="module-intro t-center stack stack--sm mb-6 reveal-up no-print">
+      <p class="t-eyebrow">Department 01 // Identity & Credentials</p>
+      <h1 class="t-display mt-2">The Traveler's Identity</h1>
+      <p class="t-subhead">Every journey begins with a document. Every document carries a story.</p>
+      <div class="prose mt-4" style="max-width: 48ch; margin-inline: auto;">
+        <p>This is the official travel credential issued by the International Department of Unscheduled Adventures. It grants its holder unrestricted permission to explore the ordinary, discover the unexpected and collect stories along the way.</p>
+      </div>
+      <div class="mt-4">
+        <span class="badge badge--verified badge--solid">DOCUMENT STATUS: AUTHENTICATED</span>
+      </div>
+    </section>
+
+    <!-- The 3D Interactive Passport Stage -->
+    <section id="passport-stage" class="passport-stage reveal-up" style="--delay: 0.2s;">
+      
+      <!-- Interactive 3D Wrapper -->
+      <div id="passport-container" class="passport-container">
+        <div class="passport-inner">
+          
+          <!-- 1. FRONT COVER (Opens outward) -->
+          <div class="passport-face passport-cover surface-forest frame-corners frame-corners--gold">
+            <div class="cover-content t-center stack stack--sm">
+              <div class="seal seal--sm mx-auto mb-4" style="margin-inline: auto;" aria-hidden="true">
+                <span class="icon icon--compass seal__mark" style="color: var(--forest-deep);"></span>
+              </div>
+              <p class="t-doc t-caps embossed-text-gold">International Department</p>
+              <p class="t-doc t-caps embossed-text-gold mb-4">Of Unscheduled Adventures</p>
+              <h2 class="t-display embossed-text-gold mt-5 mb-4" style="font-size: 2.4rem; letter-spacing: 0.05em;">Travel Document</h2>
+              <p class="t-label embossed-text-gold mt-4">Special Traveller Edition</p>
+              <p class="t-label embossed-text-gold mt-6" style="letter-spacing: 0.3em;">TTC6252021</p>
+              <div class="divider divider--dotted divider--gold" style="width: 50%; margin-inline: auto;"></div>
+              <p class="t-meta text-inverse-muted" style="letter-spacing: 0.2em;">ESTABLISHED MMXXVI</p>
+            </div>
+          </div>
+
+          <!-- 2. FRONT INSIDE (Traveler Identity Page) -->
+          <!-- Position relative dictats the height of the entire 3D block based on content -->
+          <div class="passport-face passport-front card--passport frame-stars surface-certificate border-ink-2">
+            <!-- Faint background watermark -->
+            <div class="watermark icon icon--compass" aria-hidden="true"></div>
+            
+            <div class="flex-between" style="border-bottom: 2px solid var(--border-ink); padding-bottom: 0.75rem; margin-bottom: 1.5rem;">
+              <h3 class="t-doc t-caps" style="font-weight: var(--fw-bold);">Special Travel License</h3>
+              <span class="serial"><span class="serial__label">NO.</span>TTC6252021</span>
+            </div>
+            
+            <div class="passport-grid">
+              <!-- Portrait Area -->
+              <figure class="photo-frame lift">
+                <div class="photo-frame__image placeholder-portrait" role="img" aria-label="Portrait placeholder">
+                  <span class="icon icon--star" style="font-size: 3rem; color: var(--text-muted); opacity: 0.5;"></span>
+                </div>
+                <figcaption>Photograph of Authorized traveler</figcaption>
+              </figure>
+              
+              <!-- Credentials -->
+              <div class="stack stack--sm">
+                <div class="doc-field"><span class="doc-field__label">HOLDER</span><span class="doc-field__value doc-field__value--typed">Saniya</span></div>
+                <div class="doc-field"><span class="doc-field__label">LICENSE NO.</span><span class="doc-field__value doc-field__value--typed">TTC6252021</span></div>
+                <div class="doc-field"><span class="doc-field__label">AUTHORITY</span><span class="doc-field__value doc-field__value--typed" style="font-size: 0.85rem;">Int. Dept. of Unscheduled Adventures</span></div>
+                <div class="doc-field"><span class="doc-field__label">DIVISION</span><span class="doc-field__value doc-field__value--typed">Travel License Division</span></div>
+                <div class="flex-between mt-2">
+                  <div class="issue-date"><span class="issue-date__label">YEAR OF ISSUE</span><span class="issue-date__value">2026</span></div>
+                  <div class="issue-date"><span class="issue-date__label">STATUS</span><span class="issue-date__value t-accent">ACTIVE</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex-between mt-6" style="align-items: flex-end;">
+              <div class="seal seal--sm" aria-hidden="true">
+                <span class="icon icon--compass seal__mark"></span>
+              </div>
+              <div class="signature-block">
+                <!-- Blank placeholder for the traveler's signature -->
+                <span class="signature-block__ink" style="color: transparent;">Saniya</span>
+                <div class="signature-block__line"></div>
+                <p class="signature-block__caption">SIGNATURE OF HOLDER</p>
+              </div>
+            </div>
+            
+            <div class="security-text t-center mt-4">
+              ARCHIVE REFERENCE — NOT A GOVERNMENT-ISSUED DOCUMENT
+            </div>
+          </div>
+
+          <!-- 3. BACK INSIDE (Authorization Record) -->
+          <div class="passport-face passport-back surface-aged border-double" style="padding: var(--sp-5);">
+            <!-- Faint background watermark -->
+            <div class="watermark icon icon--star" aria-hidden="true" style="opacity: 0.03; transform: scale(1.5);"></div>
+
+            <header class="doc-header" style="margin-bottom: var(--sp-4);">
+              <h3 class="t-doc t-caps" style="font-weight: var(--fw-bold); font-size: 1.1rem;">Travel Authorization Record</h3>
+              <p class="t-meta text-muted mt-1">PERMISSIONS & PRIVILEGES</p>
+            </header>
+
+            <ul class="auth-list stack stack--sm prose" style="font-family: var(--font-doc); font-size: 0.85rem; line-height: 1.5;">
+              <li><strong>01 — GENERAL TRAVEL PRIVILEGE:</strong> Permission to explore unfamiliar places without requiring a fixed itinerary.</li>
+              <li><strong>02 — PHOTOGRAPHIC DOCUMENTATION:</strong> Authorized to preserve interesting moments, unexpected sights and ordinary little details.</li>
+              <li><strong>03 — MUSICAL ACCOMPANIMENT:</strong> Permission to carry an unlimited personal soundtrack.</li>
+              <li><strong>04 — SPONTANEOUS DETOURS:</strong> Authorized to change plans whenever an unexpectedly interesting opportunity appears.</li>
+              <li><strong>05 — MEMORY COLLECTION:</strong> Permission to collect stories, photographs, postcards and little things worth remembering.</li>
+            </ul>
+
+            <div class="divider divider--dashed" style="margin-block: var(--sp-4);"></div>
+
+            <div class="grid grid--2" style="gap: var(--sp-3);">
+              <div class="issue-date"><span class="issue-date__label">LICENSE NUMBER</span><span class="issue-date__value">TTC6252021</span></div>
+              <div class="issue-date"><span class="issue-date__label">AUTHORIZATION STATUS</span><span class="issue-date__value t-accent">APPROVED</span></div>
+            </div>
+
+            <!-- Absolute Positioning for Stamps -->
+            <div class="stamp-wrap" style="position: absolute; right: 1rem; top: 11rem; pointer-events: none;">
+              <div id="stamp-auth" class="stamp stamp--round stamp--teal stamp--r2 stamp--press" style="--stamp-size: 0.9rem;">
+                <span class="stamp__top">TRAVEL</span>
+                <span class="stamp__main">AUTHORIZED</span>
+                <span class="stamp__bottom">DIVISION</span>
+              </div>
+            </div>
+
+            <div class="stamp-wrap" style="position: absolute; left: 1rem; bottom: 8rem; pointer-events: none;">
+              <div id="stamp-approved" class="stamp stamp--rect stamp--red stamp--r4 stamp--press" style="--stamp-size: 1.1rem; --delay: 0.4s;">
+                <span class="stamp__main">UNRESTRICTED ACCESS</span>
+              </div>
+            </div>
+
+            <div class="flex-between mt-6" style="align-items: flex-end; position: relative; z-index: 2;">
+              <div class="signature-block">
+                <span class="t-hand" style="font-size: 2.8rem; line-height: 0.8; color: var(--forest-deep); display: block; padding-bottom: 0.2rem;">Atulya Pratap</span>
+                <div class="signature-block__line"></div>
+                <p class="signature-block__caption" style="text-align: left;">ISSUING OFFICER<br><span style="font-size: 0.65rem;">ATULYA PRATAP</span></p>
+              </div>
+              <div class="issue-date t-center"><span class="issue-date__label">DATE</span><span class="issue-date__value">2026</span></div>
+            </div>
+
+            <div class="barcode mt-5" style="width: 100%;">
+              <span class="barcode__bars" style="width: 100%; height: 2rem;"></span>
+              <span class="barcode__text">IDA-TTC6252021-2026</span>
+            </div>
+
+            <p class="t-label t-center text-muted mt-4" style="font-size: 0.65rem;">THIS DOCUMENT REMAINS VALID FOR ALL UNPLANNED ADVENTURES.</p>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Passport Interactive Controls (Hidden in Print) -->
+      <div class="passport-controls cluster cluster--center mt-6 no-print" aria-live="polite">
+        <button id="btn-open" class="btn btn--primary lift" type="button">Tap to Open Document</button>
+        <button id="btn-front" class="btn btn--doc lift" type="button" hidden>Identity (Front)</button>
+        <button id="btn-reverse" class="btn btn--doc lift" type="button" hidden>Authorizations (Reverse)</button>
+        <button id="btn-close" class="btn btn--secondary lift" type="button" hidden>Close Passport</button>
+      </div>
+    </section>
+
+    <!-- Archival Information Section (Outside the passport) -->
+    <section class="archival-info mt-8 reveal-up no-print" style="--delay: 0.4s;">
+      <div class="divider divider--ornate mb-6"><span class="divider__diamond"></span></div>
+      
+      <div class="grid grid--2" style="gap: var(--sp-6); align-items: start;">
+        <div>
+          <h4 class="t-label t-accent mb-4">Document Information</h4>
+          <ul class="stack stack--sm">
+            <li class="doc-field"><span class="doc-field__label" style="min-width: 140px;">Document Number</span><span class="t-doc t-muted">TTC6252021</span></li>
+            <li class="doc-field"><span class="doc-field__label" style="min-width: 140px;">Category</span><span class="t-doc t-muted">Special Travel License</span></li>
+            <li class="doc-field"><span class="doc-field__label" style="min-width: 140px;">Issuing Department</span><span class="t-doc t-muted">Travel License Division</span></li>
+            <li class="doc-field"><span class="doc-field__label" style="min-width: 140px;">Established</span><span class="t-doc t-muted">2026</span></li>
+            <li class="doc-field"><span class="doc-field__label" style="min-width: 140px;">Current Status</span><span class="t-doc t-accent">ACTIVE</span></li>
+          </ul>
+        </div>
+        <div class="surface-aged border-dashed p-5">
+          <h4 class="t-label t-accent mb-3">Issuing Authority</h4>
+          <h5 class="t-display mb-3" style="font-size: 1.2rem;">International Department of Unscheduled Adventures</h5>
+          <p class="t-body-sm text-secondary italic mb-4">"Established to authorize journeys without destinations, detours without explanations and memories without expiration dates."</p>
+          <div class="flex-between">
+            <span class="badge badge--archived">DOCUMENT ARCHIVED SUCCESSFULLY</span>
+            <button class="btn btn--text btn--sm no-print" id="btn-print" type="button" aria-label="Print Document">Print Record</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="js/identity.js"></script>
+</body>
+</html>
