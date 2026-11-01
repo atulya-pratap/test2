@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16 332 122" width="332" height="122" role="img">
+<defs>
+<filter id="d" x="-5%" y="-5%" width="110%" height="110%">
+<feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" seed="3" result="n"/>
+<feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -9 0 0 0 7.2" result="speck"/>
+<feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="7" result="n2"/>
+<feColorMatrix in="n2" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  -6 0 0 0 5.1" result="patch"/>
+<feComposite in="SourceGraphic" in2="speck" operator="in" result="a"/>
+<feComposite in="a" in2="patch" operator="in"/>
+</filter>
+<path id="top" d="M 32,100 A 68,68 0 0 1 168,100"/>
+<path id="bot" d="M 32,100 A 68,68 0 0 0 168,100"/>
+</defs>
+<g filter="url(#d)" fill="#2F6F7E" stroke="#2F6F7E" transform="rotate(4 150.0 45.0)" font-family="'Courier New', Courier, monospace" font-weight="700">
+<rect x="8" y="6" width="284" height="78" fill="none" stroke-width="6" rx="4"/>
+<rect x="17" y="15" width="266" height="60" fill="none" stroke-width="1.8" rx="2"/>
+<text x="150" y="46" font-size="22" text-anchor="middle" stroke="none" letter-spacing="4">ACCESS</text>
+<text x="150" y="72" font-size="22" text-anchor="middle" stroke="none" letter-spacing="4">GRANTED</text>
+
+</g>
+</svg>

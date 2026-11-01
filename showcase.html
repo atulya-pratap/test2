@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#29372C">
+  <meta name="robots" content="noindex">
+  <title>Design System Showcase · The Saniya Archive</title>
+
+  <!-- Google Fonts: five families, each with one job (see PROJECT_CONTEXT.md) -->
+  <link rel="icon" href="data:,">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@600;700;800&family=Reenie+Beanie&family=Special+Elite&display=swap" rel="stylesheet">
+
+  <!-- Order matters: tokens/components, then motion, then responsive overrides -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+
+  <style>
+    /* Showcase-only chrome. Nothing here belongs to the design system. */
+    .sc-nav { position: sticky; top: 0; z-index: var(--z-sticky); padding: var(--sp-2) 0; }
+    .sc-nav ul { display: flex; gap: var(--sp-1); overflow-x: auto; scrollbar-width: none; }
+    .sc-nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--sp-3); font-family: var(--font-doc); font-size: var(--fs-label); letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--parchment); text-decoration: none; white-space: nowrap; }
+    .sc-nav a:hover { background: rgba(233, 223, 197, 0.14); }
+    .sc-swatch { display: flex; flex-direction: column; border: 1px solid var(--ink); background: var(--surface-raised); box-shadow: var(--shadow-1); }
+    .sc-swatch__chip { height: 4.2rem; border-bottom: 1px solid var(--ink); display: grid; place-items: center; font-family: var(--font-doc); font-weight: 700; font-size: 1.2rem; }
+    .sc-swatch__meta { padding: var(--sp-2) var(--sp-3); font-family: var(--font-doc); font-size: 0.75rem; line-height: 1.4; }
+    .sc-swatch__meta b { display: block; font-size: 0.8rem; }
+    .sc-surface { min-height: 8.5rem; padding: var(--sp-4); border: 1px solid var(--ink); }
+    .sc-spec { font-family: var(--font-doc); font-size: 0.72rem; color: var(--text-muted); margin-top: var(--sp-1); }
+    .sc-stage { position: relative; min-height: 11rem; display: grid; place-items: center; padding: var(--sp-5); }
+    .sc-vp { position: fixed; right: 0.5rem; bottom: 0.5rem; z-index: var(--z-toast); padding: 0.35rem 0.6rem; background: var(--ink); color: var(--parchment); font-family: var(--font-doc); font-size: 0.7rem; letter-spacing: 0.06em; }
+    .sc-box { display: grid; place-items: center; min-height: 4rem; background: rgba(41,55,44,.1); border: 1px dashed var(--ink); font-family: var(--font-doc); font-size: .75rem; }
+    h2.sc-h { margin-bottom: var(--sp-2); }
+    .sc-sub { margin: var(--sp-6) 0 var(--sp-3); }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="sc-vp" id="vp" aria-hidden="true"></div>
+
+  <!-- ====================================================================
+       HEADER / NAV (showcase chrome)
+       ==================================================================== -->
+  <header class="surface-forest">
+    <div class="container container--max section--tight">
+      <div class="doc-header" style="border-bottom-color: var(--border-on-dark);">
+        <span class="icon icon--compass icon--xl" aria-hidden="true"></span>
+        <p class="doc-header__eyebrow" style="color: var(--text-inverse-muted);">International Department of Unscheduled Adventures</p>
+        <h1 class="doc-header__title" style="font-size: var(--fs-h1);">Design System Showcase</h1>
+        <p class="doc-header__sub" style="color: var(--text-inverse);">Travel License Division</p>
+        <p class="doc-header__est" style="color: var(--text-inverse-muted);">Established 2026 · Stage 02</p>
+      </div>
+      <p class="t-doc" style="color: var(--text-inverse-muted); text-align:center;">Temporary test page — inspect every token and component. Not part of the final site.</p>
+    </div>
+    <nav class="sc-nav surface-forest" aria-label="Showcase sections" style="box-shadow: 0 2px 0 rgba(0,0,0,.25);">
+      <div class="container container--max">
+        <ul>
+          <li><a href="#colour">Colour</a></li>
+          <li><a href="#type">Type</a></li>
+          <li><a href="#surfaces">Surfaces</a></li>
+          <li><a href="#buttons">Buttons</a></li>
+          <li><a href="#cards">Cards</a></li>
+          <li><a href="#borders">Borders</a></li>
+          <li><a href="#stamps">Stamps</a></li>
+          <li><a href="#badges">Badges</a></li>
+          <li><a href="#documents">Documents</a></li>
+          <li><a href="#motion">Motion</a></li>
+          <li><a href="#responsive">Responsive</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ==================================================================
+         01 COLOUR
+         ================================================================== -->
+    <section class="section" id="colour">
+      <div class="container container--max">
+        <p class="t-eyebrow">01 · Colour system</p>
+        <h2 class="sc-h">Palette &amp; combinations</h2>
+        <p class="t-subhead">Five mandated primaries plus supporting tones. Every colour is a CSS variable.</p>
+
+        <h3 class="sc-sub t-label">Primary</h3>
+        <div class="grid grid--auto stagger">
+          <div class="sc-swatch reveal-up"><div class="sc-swatch__chip" style="background:var(--parchment)">Aa</div><div class="sc-swatch__meta"><b>Parchment</b>#E9DFC5<br>--parchment</div></div>
+          <div class="sc-swatch reveal-up"><div class="sc-swatch__chip" style="background:var(--aged-paper)">Aa</div><div class="sc-swatch__meta"><b>Aged Paper</b>#C6B58F<br>--aged-paper</div></div>
+          <div class="sc-swatch reveal-up"><div class="sc-swatch__chip" style="background:var(--ink);color:var(--parchment)">Aa</div><div class="sc-swatch__meta"><b>Ink Black</b>#29291F<br>--ink</div></div>
+          <div class="sc-swatch reveal-up"><div class="sc-swatch__chip" style="background:var(--forest);color:var(--parchment)">Aa</div><div class="sc-swatch__meta"><b>Forest Green</b>#29372C<br>--forest</div></div>
+          <div class="sc-swatch reveal-up"><div class="sc-swatch__chip" style="background:var(--oxide);color:var(--parchment)">Aa</div><div class="sc-swatch__meta"><b>Oxide Red</b>#763E35<br>--oxide</div></div>
+        </div>
+
+        <h3 class="sc-sub t-label">Supporting</h3>
+        <div class="grid grid--auto">
+          <div class="sc-swatch"><div class="sc-swatch__chip" style="background:var(--dusty-cream)">Aa</div><div class="sc-swatch__meta"><b>Dusty Cream</b>#F2EBD6</div></div>
+          <div class="sc-swatch"><div class="sc-swatch__chip" style="background:var(--warm-beige)">Aa</div><div class="sc-swatch__meta"><b>Warm Beige</b>#D9CBA6</div></div>
+          <div class="sc-swatch"><div class="sc-swatch__chip" style="background:var(--faded-brown);color:var(--dusty-cream)">Aa</div><div class="sc-swatch__meta"><b>Faded Brown</b>#8A6F4D</div></div>
+          <div class="sc-swatch"><div class="sc-swatch__chip" style="background:var(--antique-gold);color:var(--ink)">Aa</div><div class="sc-swatch__meta"><b>Antique Gold</b>#A98A3D</div></div>
+          <div class="sc-swatch"><div class="sc-swatch__chip" style="background:var(--muted-olive);color:var(--parchment)">Aa</div><div class="sc-swatch__meta"><b>Muted Olive</b>#5F6238</div></div>
+          <div class="sc-swatch"><div class="sc-swatch__chip" style="background:var(--stamp-teal);color:var(--parchment)">Aa</div><div class="sc-swatch__meta"><b>Stamp Teal</b>#2F6F7E</div></div>
+          <div class="sc-swatch"><div class="sc-swatch__chip" style="background:var(--stamp-blue);color:var(--parchment)">Aa</div><div class="sc-swatch__meta"><b>Stamp Blue</b>#2C4F7C</div></div>
+        </div>
+
+        <h3 class="sc-sub t-label">Status</h3>
+        <div class="cluster">
+          <span class="badge badge--approved">Success</span>
+          <span class="badge badge--pending">Warning</span>
+          <span class="badge badge--expired">Danger</span>
+          <span class="badge badge--verified">Info</span>
+        </div>
+
+        <h3 class="sc-sub t-label">Approved text / background pairs</h3>
+        <div class="grid grid--2" style="--grid-gap: var(--sp-4)">
+          <div class="sc-surface" style="background:var(--parchment);color:var(--ink)"><b class="t-label">Ink on Parchment</b><p class="t-body-sm">Primary reading pair — roughly 11:1.</p><p class="t-body-sm" style="color:var(--text-secondary)">Secondary text — about 7:1.</p><p class="t-body-sm" style="color:var(--oxide)">Oxide accent — about 6:1.</p></div>
+          <div class="sc-surface" style="background:var(--aged-paper);color:var(--ink)"><b class="t-label">Ink on Aged Paper</b><p class="t-body-sm">Used for secondary panels — about 7:1.</p><p class="t-body-sm" style="color:var(--forest)">Forest on aged paper — about 6:1.</p></div>
+          <div class="sc-surface" style="background:var(--forest);color:var(--parchment)"><b class="t-label">Parchment on Forest</b><p class="t-body-sm">Dark document pair — roughly 9:1.</p><p class="t-body-sm" style="color:var(--gold-light)">Gold-light accent on forest.</p></div>
+          <div class="sc-surface" style="background:var(--oxide);color:var(--parchment)"><b class="t-label">Parchment on Oxide</b><p class="t-body-sm">Ribbons and danger buttons — about 6:1.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         02 TYPOGRAPHY
+         ================================================================== -->
+    <section class="section surface-grain" id="type">
+      <div class="container container--max">
+        <p class="t-eyebrow">02 · Typography</p>
+        <h2 class="sc-h">Five voices, one job each</h2>
+
+        <div class="stack stack--lg mt-6">
+          <div><p class="t-display">Display Heading</p><p class="sc-spec">.t-display · Playfair Display 700 · fluid 2.6–5rem · lh 1.1 · ls −0.01em</p></div>
+          <div><h1>Heading One (H1)</h1><p class="sc-spec">.t-h1 / h1 · Playfair Display 700 · fluid 2.1–3.4rem · lh 1.2</p></div>
+          <div><h2>Section Heading (H2)</h2><p class="sc-spec">.t-h2 / h2 · Playfair Display 600 · fluid 1.6–2.4rem</p></div>
+          <div><h3>Sub-section Heading (H3)</h3><p class="sc-spec">.t-h3 / h3 · Playfair Display 600 · fluid 1.25–1.65rem</p></div>
+          <div><p class="t-subhead">A subheading in italic Cormorant, quiet and editorial.</p><p class="sc-spec">.t-subhead · Cormorant Garamond 500 italic · 1.3–1.55rem</p></div>
+          <div class="prose"><p class="t-body dropcap">Body text is set in Cormorant Garamond at a generous size, because its small x-height needs room. It is meant for stories, captions and the warmer parts of the archive — the places where a person is speaking rather than a department.</p><p class="sc-spec">.t-body · Cormorant Garamond 500 · 1.25rem (1.3 on desktop) · lh 1.55</p></div>
+          <div><p class="t-doc">Official document text is typed in Courier Prime. It carries clauses, field values and anything that should feel stamped by an office.</p><p class="sc-spec">.t-doc · Courier Prime 400 · 15px · lh 1.6</p></div>
+          <div><p class="t-meta">SERIAL NO. TTC0000000 · FILED 25/08/2026 · FOLIO 04</p><p class="sc-spec">.t-meta · Courier Prime 400 · 13px · ls 0.04em</p></div>
+          <div><p class="t-label">Label · Field heading</p><p class="sc-spec">.t-label · Courier Prime 700 · 12px · uppercase · ls 0.14em</p></div>
+          <div><p class="t-note">Typewritten annotation: "Bearer wandered off again — see Annex B."</p><p class="sc-spec">.t-note · Special Elite · 1.1rem</p></div>
+          <div><p class="t-hand">Handwritten entry, signed in ink</p><p class="sc-spec">.t-hand · Reenie Beanie · 1.9rem — used ONLY for filled-in fields and signatures</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         03 SURFACES
+         ================================================================== -->
+    <section class="section" id="surfaces">
+      <div class="container container--max">
+        <p class="t-eyebrow">03 · Paper textures &amp; surfaces</p>
+        <h2 class="sc-h">Seven reusable surfaces</h2>
+        <div class="grid grid--3 mt-5">
+          <div class="sc-surface surface-parchment"><b class="t-label">.surface-parchment</b><p class="t-body-sm">Clean parchment. The default sheet.</p></div>
+          <div class="sc-surface surface-aged"><b class="t-label">.surface-aged</b><p class="t-body-sm">Aged paper with a lit centre and edge burn.</p></div>
+          <div class="sc-surface surface-grain"><b class="t-label">.surface-grain</b><p class="t-body-sm">Subtle grain and fibres. Safe under long text.</p></div>
+          <div class="sc-surface surface-forest"><b class="t-label">.surface-forest</b><p class="t-body-sm">Dark forest document stock for classified material.</p></div>
+          <div class="sc-surface surface-letter" style="padding-block: 1.2rem"><b class="t-label">.surface-letter</b><p class="t-body-sm" style="margin:0">Old letter paper, ruled, with margin.</p></div>
+          <div class="sc-surface surface-certificate" style="display:grid;place-items:center;text-align:center"><div><b class="t-label">.surface-certificate</b><p class="t-body-sm">Guilloche and gold double rule.</p></div></div>
+          <div class="sc-surface surface-distressed"><b class="t-label">.surface-distressed</b><p class="t-body-sm">Stains and scuffs, still readable.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         04 BUTTONS
+         ================================================================== -->
+    <section class="section surface-aged" id="buttons">
+      <div class="container container--max">
+        <p class="t-eyebrow">04 · Buttons</p>
+        <h2 class="sc-h">Actions &amp; states</h2>
+        <p class="t-subhead">Hover, press, tab to focus. Every target is at least 48px.</p>
+
+        <div class="cluster cluster--lg mt-5">
+          <button class="btn btn--primary" type="button">Primary</button>
+          <button class="btn btn--secondary" type="button">Secondary</button>
+          <button class="btn btn--text" type="button">Text only</button>
+          <button class="btn btn--doc" type="button">Document</button>
+          <button class="btn btn--primary" type="button" disabled>Disabled</button>
+          <button class="btn btn--secondary" type="button" aria-disabled="true">Disabled</button>
+        </div>
+        <div class="cluster cluster--lg mt-5">
+          <button class="btn btn--danger" type="button">Danger</button>
+          <button class="btn btn--primary btn--sm" type="button">Small</button>
+          <a class="btn btn--secondary" href="#buttons">Link as button</a>
+        </div>
+        <div class="mt-5" style="max-width: 24rem"><button class="btn btn--primary btn--block" type="button">Block · full width</button></div>
+
+        <h3 class="sc-sub t-label">On dark</h3>
+        <div class="surface-forest p-5">
+          <div class="cluster cluster--lg">
+            <button class="btn btn--primary" type="button">Primary</button>
+            <button class="btn btn--secondary" type="button">Secondary</button>
+            <button class="btn btn--text" type="button">Text only</button>
+          </div>
+        </div>
+
+        <h3 class="sc-sub t-label">Form fields</h3>
+        <div class="grid grid--2" style="max-width: 44rem">
+          <div><label class="t-label field-label" for="f1">Name of traveller</label><input id="f1" class="input" type="text" placeholder="As it appears on your licence"></div>
+          <div><label class="t-label field-label" for="f2">Disabled</label><input id="f2" class="input" type="text" value="Locked" disabled></div>
+          <div><label class="t-label field-label" for="f3">Invalid</label><input id="f3" class="input" type="text" value="TTC-???" aria-invalid="true"><p class="t-meta field-hint" style="color:var(--danger)">Serial numbers begin TTC.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         05 CARDS
+         ================================================================== -->
+    <section class="section" id="cards">
+      <div class="container container--max">
+        <p class="t-eyebrow">05 · Cards</p>
+        <h2 class="sc-h">Six kinds of paper</h2>
+
+        <div class="grid grid--2 mt-5" style="--grid-gap: var(--sp-6)">
+
+          <article class="card lift">
+            <p class="t-label card__meta">Standard card</p>
+            <h3 class="card__title">A Quiet Detour</h3>
+            <p class="t-body-sm card__body">The standard parchment card: grain, ink keyline, layered paper shadow.</p>
+            <div class="card__footer"><span class="badge badge--approved">Approved</span></div>
+          </article>
+
+          <article class="card card--document">
+            <p class="t-label card__meta">Document card</p>
+            <h3 class="card__title">Form TL-26 / Entry</h3>
+            <p class="card__body">Typed in Courier Prime with an inner keyline, like a filed government form.</p>
+            <div class="doc-field mt-4"><span class="doc-field__label">Filed by</span><span class="doc-field__value doc-field__value--typed">Records Office</span></div>
+          </article>
+
+          <article class="card card--classified">
+            <p class="t-label card__meta" style="color: var(--gold-light)">Classified</p>
+            <h3 class="card__title">Operation Detour</h3>
+            <p class="card__body">Subject last seen at <span class="redact" tabindex="0">the lighthouse café</span> carrying <span class="redact" tabindex="0">one suitcase of songs</span>. Hover, tap or focus a redaction to read it.</p>
+          </article>
+
+          <div style="display:grid;place-items:center;padding-block:var(--sp-5)">
+            <figure class="card card--polaroid lift">
+              <div class="polaroid__photo" role="img" aria-label="Photo placeholder"></div>
+              <figcaption class="polaroid__caption">first detour, 2026</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <h3 class="sc-sub t-label">Passport / licence card</h3>
+        <article class="card--passport frame-stars" style="--star-size: 1.1rem">
+          <div class="doc-header" style="border-bottom:0; margin-bottom: var(--sp-3); padding-bottom: 0">
+            <p class="passport__title">Permanent License of Travel</p>
+            <p class="passport__number">NO. TTC0000000</p>
+          </div>
+          <div class="passport__layout">
+            <figure class="photo-frame">
+              <div class="photo-frame__image" role="img" aria-label="Photograph placeholder"></div>
+              <figcaption>Photograph of Authorized traveler</figcaption>
+            </figure>
+            <div>
+              <div class="doc-field"><span class="doc-field__label">Issued to</span><span class="doc-field__value">Traveller Name</span></div>
+              <div class="doc-field"><span class="doc-field__label">Date of birth</span><span class="doc-field__value">00 Month</span></div>
+              <div class="doc-field"><span class="doc-field__label">Place of issue</span><span class="doc-field__value">City</span></div>
+              <div class="doc-field"><span class="doc-field__label">Date of issue</span><span class="doc-field__value">00/00/2026</span></div>
+              <h3 class="t-label t-center mt-4">License of Travel</h3>
+              <p class="t-doc mt-4" style="margin-top: var(--sp-2)">This is to certify that the person named and described above is permitted to travel and explore freely unless detained by law.</p>
+              <div class="stamp-wrap" style="position:relative; min-height: 6.5rem; margin-top: var(--sp-3)">
+                <div class="stamp stamp--oval stamp--teal stamp--r2" style="--stamp-size: .9rem"><span class="stamp__main">Call me if<br>you get lost</span></div>
+              </div>
+              <div class="signature-block">
+                <span class="signature-block__ink">Signature</span>
+                <div class="signature-block__line"></div>
+                <p class="signature-block__caption">Signature of Authorized traveler</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <h3 class="sc-sub t-label">Ticket</h3>
+        <div class="ticket">
+          <article class="card--ticket">
+            <div>
+              <p class="t-label">Boarding pass · Unscheduled</p>
+              <div class="ticket__route mt-4" style="margin-top: var(--sp-3)"><span>HOME</span><span class="icon icon--plane" aria-hidden="true"></span><span>ELSEWHERE</span></div>
+              <p class="t-doc" style="margin-top: var(--sp-3)">Gate: wherever · Seat: window · Departs: when you are ready</p>
+            </div>
+            <div class="ticket__stub">
+              <div class="barcode"><span class="barcode__bars"></span><span class="barcode__text">TTC0000000</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         06 BORDERS & DIVIDERS
+         ================================================================== -->
+    <section class="section surface-grain" id="borders">
+      <div class="container container--max">
+        <p class="t-eyebrow">06 · Borders, frames &amp; dividers</p>
+        <h2 class="sc-h">Printed edges</h2>
+        <div class="grid grid--3 mt-5">
+          <div class="sc-surface border-ink"><b class="t-label">.border-ink</b></div>
+          <div class="sc-surface border-double"><b class="t-label">.border-double</b></div>
+          <div class="sc-surface border-dashed"><b class="t-label">.border-dashed</b></div>
+          <div class="sc-surface border-gold"><b class="t-label">.border-gold</b></div>
+          <div class="sc-surface frame-corners" style="border:0"><b class="t-label">.frame-corners</b></div>
+          <div class="sc-surface border-inset" style="border:1px solid var(--ink)"><b class="t-label">.border-inset</b></div>
+        </div>
+
+        <h3 class="sc-sub t-label">Star frame</h3>
+        <div class="frame-stars surface-aged" style="border:2px solid var(--ink); border-radius: var(--radius-license)">
+          <p class="t-doc t-center">Stars distribute evenly at any width and never clip.</p>
+        </div>
+
+        <h3 class="sc-sub t-label">Dividers</h3>
+        <div class="divider"><span class="icon icon--star" aria-hidden="true"></span></div>
+        <div class="divider divider--double"><span class="icon icon--compass" aria-hidden="true"></span></div>
+        <div class="divider divider--dashed"><span class="t-label">Tear here</span></div>
+        <div class="divider divider--dotted divider--gold"></div>
+        <div class="divider divider--ornate" role="separator"><span class="divider__diamond"></span></div>
+        <div class="perforation"></div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         07 STAMPS & SEALS
+         ================================================================== -->
+    <section class="section" id="stamps">
+      <div class="container container--max">
+        <p class="t-eyebrow">07 · Stamp &amp; seal system</p>
+        <h2 class="sc-h">Ink, impression &amp; emboss</h2>
+        <p class="t-subhead">CSS stamps scale with <code>--stamp-size</code>, rotate with <code>--stamp-rot</code>, and take any ink colour.</p>
+
+        <div class="cluster cluster--lg mt-5">
+          <button class="btn btn--doc" type="button" data-replay=".stamp--press|is-stamped">Replay impression</button>
+        </div>
+
+        <h3 class="sc-sub t-label">CSS stamps · rectangular</h3>
+        <div class="grid grid--3 surface-parchment" style="--grid-gap: var(--sp-6); padding: var(--sp-5); border:1px solid var(--ink)">
+          <div class="sc-stage"><div class="stamp stamp--rect stamp--green stamp--r1 stamp--press"><span class="stamp__main">Approved</span></div></div>
+          <div class="sc-stage"><div class="stamp stamp--rect stamp--teal stamp--r3 stamp--press" style="--delay:.1s"><span class="stamp__main">Access<br>Granted</span></div></div>
+          <div class="sc-stage"><div class="stamp stamp--rect stamp--red stamp--r2 stamp--press" style="--delay:.2s"><span class="stamp__main">Top Secret</span><span class="stamp__sub">Eyes only</span></div></div>
+          <div class="sc-stage"><div class="stamp stamp--rect stamp--gold stamp--r4 stamp--press" style="--delay:.3s"><span class="stamp__main">Archived</span><span class="stamp__date">01 NOV 2026</span></div></div>
+          <div class="sc-stage"><div class="stamp stamp--rect stamp--red stamp--r1 stamp--press" style="--delay:.4s"><span class="stamp__main">Restricted</span></div></div>
+          <div class="sc-stage"><div class="stamp stamp--rect stamp--black stamp--r3 stamp--press" style="--delay:.5s"><span class="stamp__main">Official<br>Document</span></div></div>
+        </div>
+
+        <h3 class="sc-sub t-label">CSS stamps · circular &amp; oval</h3>
+        <div class="grid grid--3 surface-parchment" style="--grid-gap: var(--sp-6); padding: var(--sp-5); border:1px solid var(--ink)">
+          <div class="sc-stage"><div class="stamp stamp--round stamp--blue stamp--r2 stamp--press"><span class="stamp__stars"></span><span class="stamp__main">Verified</span><span class="stamp__stars"></span></div></div>
+          <div class="sc-stage"><div class="stamp stamp--round stamp--green stamp--r4 stamp--press" style="--delay:.1s"><span class="stamp__top">Travel</span><span class="stamp__main">Authorized</span><span class="stamp__bottom">Division</span></div></div>
+          <div class="sc-stage"><div class="stamp stamp--oval stamp--teal stamp--r1 stamp--press" style="--delay:.2s"><span class="stamp__main">Call me if<br>you get lost</span></div></div>
+        </div>
+
+        <h3 class="sc-sub t-label">Sizes</h3>
+        <div class="cluster cluster--lg" style="align-items:flex-end; padding: var(--sp-4)">
+          <div class="stamp stamp--rect stamp--red stamp--sm"><span class="stamp__main">Small</span></div>
+          <div class="stamp stamp--rect stamp--red"><span class="stamp__main">Default</span></div>
+          <div class="stamp stamp--rect stamp--red stamp--lg"><span class="stamp__main">Large</span></div>
+        </div>
+
+        <h3 class="sc-sub t-label">On a dark surface</h3>
+        <div class="surface-forest p-5 cluster cluster--lg cluster--center">
+          <div class="stamp stamp--rect stamp--red stamp--r1"><span class="stamp__main">Classified</span></div>
+          <div class="stamp stamp--round stamp--black stamp--r3"><span class="stamp__top">Official</span><span class="stamp__main">Seal</span><span class="stamp__bottom">2026</span></div>
+        </div>
+
+        <h3 class="sc-sub t-label">SVG artwork · assets/stamps/</h3>
+        <div class="grid grid--4 surface-grain" style="--grid-gap: var(--sp-4); padding: var(--sp-5); border:1px solid var(--ink); align-items:center; justify-items:center">
+          <img class="stamp-img" src="assets/stamps/approved.svg" alt="Approved stamp" width="300" height="102" loading="lazy">
+          <img class="stamp-img" src="assets/stamps/access-granted.svg" alt="Access granted stamp" width="300" height="116" loading="lazy">
+          <img class="stamp-img" src="assets/stamps/verified.svg" alt="Verified stamp" width="200" height="200" loading="lazy">
+          <img class="stamp-img" src="assets/stamps/top-secret.svg" alt="Top secret stamp" width="300" height="102" loading="lazy">
+          <img class="stamp-img" src="assets/stamps/official.svg" alt="Official document stamp" width="200" height="200" loading="lazy">
+          <img class="stamp-img" src="assets/stamps/travel-authorized.svg" alt="Travel authorized stamp" width="200" height="200" loading="lazy">
+          <img class="stamp-img" src="assets/stamps/archived.svg" alt="Archived stamp" width="300" height="102" loading="lazy">
+          <img class="stamp-img" src="assets/stamps/restricted.svg" alt="Restricted stamp" width="300" height="102" loading="lazy">
+        </div>
+
+        <h3 class="sc-sub t-label">Official seals</h3>
+        <div class="cluster cluster--lg">
+          <div class="seal seal--sm"><span class="icon icon--star seal__mark" aria-hidden="true"></span></div>
+          <div class="seal"><span class="icon icon--compass seal__mark" aria-hidden="true"></span></div>
+          <div class="seal seal--lg"><span class="icon icon--star seal__mark" aria-hidden="true"></span></div>
+          <div class="seal seal--wax"><span class="icon icon--envelope seal__mark" aria-hidden="true"></span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         08 BADGES
+         ================================================================== -->
+    <section class="section surface-aged" id="badges">
+      <div class="container container--max">
+        <p class="t-eyebrow">08 · Badges &amp; labels</p>
+        <h2 class="sc-h">Status, by shape and colour</h2>
+        <div class="cluster mt-5">
+          <span class="badge badge--approved">Approved</span>
+          <span class="badge badge--verified">Verified</span>
+          <span class="badge badge--classified">Classified</span>
+          <span class="badge badge--pending">Pending</span>
+          <span class="badge badge--archived">Archived</span>
+          <span class="badge badge--expired">Expired</span>
+        </div>
+        <div class="cluster mt-5">
+          <span class="badge badge--approved badge--solid">Approved</span>
+          <span class="badge badge--pending badge--solid">Pending</span>
+          <span class="badge badge--expired badge--solid">Expired</span>
+          <span class="label">Plain label</span>
+          <span class="label label--tape">Tape label</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         09 DOCUMENT COMPONENTS
+         ================================================================== -->
+    <section class="section" id="documents">
+      <div class="container container--max">
+        <p class="t-eyebrow">09 · Document components</p>
+        <h2 class="sc-h">A complete document</h2>
+
+        <article class="card card--document frame-corners mt-5" style="max-width: 40rem; margin-inline:auto; padding: var(--sp-6)">
+          <header class="doc-header">
+            <span class="icon icon--compass icon--lg" aria-hidden="true"></span>
+            <p class="doc-header__eyebrow">International Department of</p>
+            <h3 class="doc-header__title">Unscheduled Adventures</h3>
+            <p class="doc-header__sub">Travel License Division</p>
+            <p class="doc-header__est">Established 2026</p>
+          </header>
+
+          <div class="cluster" style="justify-content: space-between">
+            <span class="serial"><span class="serial__label">No.</span>TTC0000000</span>
+            <span class="issue-date"><span class="issue-date__label">Date of issue</span><span class="issue-date__value">01 / 11 / 2026</span></span>
+          </div>
+
+          <p class="mt-5">The bearer is authorised for unlimited exploration and unexpected detours. This document is non-transferable.</p>
+
+          <div class="cluster cluster--lg mt-6" style="align-items:flex-end; justify-content: space-between">
+            <div class="signature-block"><span class="signature-block__ink">Signed</span><div class="signature-block__line"></div><p class="signature-block__caption">Signature of Authorized traveler</p></div>
+            <div class="seal seal--sm"><span class="icon icon--star seal__mark" aria-hidden="true"></span></div>
+          </div>
+
+          <footer class="doc-footer">
+            <div class="barcode"><span class="barcode__bars"></span><span class="barcode__text">TTC0000000</span></div>
+            <div class="qr-slot">QR slot</div>
+            <span>Page 1 of 1</span>
+          </footer>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         10 MOTION
+         ================================================================== -->
+    <section class="section surface-grain" id="motion">
+      <div class="container container--max">
+        <p class="t-eyebrow">10 · Animation</p>
+        <h2 class="sc-h">Tactile, deliberate motion</h2>
+        <p class="t-subhead" id="rm-note"></p>
+
+        <div class="grid grid--2 mt-5" style="--grid-gap: var(--sp-6)">
+
+          <div class="card">
+            <h3 class="card__title">Fade in &amp; upward reveal</h3>
+            <div class="cluster mt-4" style="margin-top: var(--sp-3)"><button class="btn btn--secondary btn--sm" type="button" data-replay="#demo-fade,#demo-up|reveal-up">Replay</button></div>
+            <div class="grid grid--2 mt-4" style="margin-top: var(--sp-3)">
+              <div id="demo-fade" class="sc-box fade-in">.fade-in</div>
+              <div id="demo-up" class="sc-box reveal-up">.reveal-up</div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title">Paper unfold</h3>
+            <div class="cluster mt-4" style="margin-top: var(--sp-3)"><button class="btn btn--secondary btn--sm" type="button" data-replay="#demo-unfold|unfold">Replay</button></div>
+            <div id="demo-unfold" class="card--document unfold" style="margin-top: var(--sp-3); padding: var(--sp-4)"><p class="t-label">Form TL-26</p><p class="t-doc">Opens from its top edge.</p></div>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title">Typewriter</h3>
+            <div class="cluster mt-4" style="margin-top: var(--sp-3)"><button class="btn btn--secondary btn--sm" type="button" data-replay="#demo-type|typewriter">Replay</button></div>
+            <p style="margin-top: var(--sp-3); font-size: 1.1rem"><span id="demo-type" class="typewriter" style="--tw-chars: 24">Travel authorised. Go.</span></p>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title">Stamp impression</h3>
+            <div class="sc-stage" style="min-height: 9rem">
+              <div class="stamp stamp--rect stamp--green stamp--r1 stamp--press"><span class="stamp__main">Approved</span></div>
+            </div>
+            <button class="btn btn--secondary btn--sm" type="button" data-replay=".stamp--press|is-stamped">Replay</button>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title">Envelope opening</h3>
+            <div class="envelope" id="envelope" style="margin-inline:auto">
+              <div class="envelope__back"></div>
+              <div class="envelope__letter"><div><p class="t-label">You are invited</p><p class="t-note">to get lost, beautifully.</p></div></div>
+              <div class="envelope__front"></div>
+              <div class="envelope__flap"></div>
+              <button class="seal seal--wax envelope__seal" type="button" aria-label="Open envelope"><span class="icon icon--star seal__mark" aria-hidden="true"></span></button>
+            </div>
+            <div class="cluster cluster--center mt-5">
+              <button class="btn btn--doc" id="envelope-toggle" type="button" aria-expanded="false">Open envelope</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title">Document flip</h3>
+            <div class="flip mt-4" id="flip" style="margin-top: var(--sp-3)">
+              <div class="flip__inner">
+                <div class="flip__face flip__face--front"><div class="card--passport" style="padding: var(--sp-5); text-align:center"><p class="passport__title">License of Travel</p><p class="passport__number">FRONT</p></div></div>
+                <div class="flip__face flip__face--back"><div class="card--passport" style="padding: var(--sp-5); text-align:center"><p class="passport__title">Travel Conditions</p><p class="passport__number">BACK</p></div></div>
+              </div>
+            </div>
+            <div class="cluster cluster--center mt-5">
+              <button class="btn btn--doc" id="flip-toggle" type="button" aria-pressed="false">Show back</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title">Hover lift</h3>
+            <p class="t-body-sm">On devices with a mouse, these rise by 3px. Touch screens are unaffected.</p>
+            <div class="grid grid--2 mt-4" style="margin-top: var(--sp-3)">
+              <div class="card card--tight lift"><span class="t-label">.lift</span></div>
+              <div class="card card--polaroid lift tilt-r" style="padding: .4rem"><div class="polaroid__photo" style="aspect-ratio: 2/1"></div></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card__title">Page transition</h3>
+            <p class="t-body-sm">Classes <code>.page-enter</code> / <code>.page-exit</code>, plus native view transitions between pages where supported.</p>
+            <button class="btn btn--secondary btn--sm mt-4" style="margin-top: var(--sp-3)" type="button" data-replay="#demo-page|page-enter">Replay</button>
+            <div id="demo-page" class="sc-box page-enter" style="margin-top: var(--sp-3)">.page-enter</div>
+          </div>
+        </div>
+
+        <div class="js-reveal card mt-6" style="margin-top: var(--sp-6)">
+          <p class="t-label">Scroll reveal</p>
+          <p class="t-body-sm">This card used <code>.js-reveal</code> and appeared as it scrolled into view. Without JavaScript it is simply visible.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================================================================
+         11 RESPONSIVE
+         ================================================================== -->
+    <section class="section" id="responsive">
+      <div class="container container--max">
+        <p class="t-eyebrow">11 · Responsive layouts</p>
+        <h2 class="sc-h">Mobile first</h2>
+        <p class="t-subhead">Resize the window; the badge at the bottom-right shows the active breakpoint.</p>
+
+        <div class="card card--document mt-5" style="margin-top: var(--sp-5)">
+          <table style="width:100%; border-collapse: collapse; font-family: var(--font-doc); font-size: .85rem">
+            <thead><tr style="text-align:left; border-bottom: 2px solid var(--ink)"><th style="padding:.5rem">Name</th><th style="padding:.5rem">Width</th><th style="padding:.5rem">Grid</th></tr></thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border-soft)"><td style="padding:.5rem">xs</td><td style="padding:.5rem">≤ 359px</td><td style="padding:.5rem">1 col, tight padding</td></tr>
+              <tr style="border-bottom:1px solid var(--border-soft)"><td style="padding:.5rem">base</td><td style="padding:.5rem">360–599px</td><td style="padding:.5rem">1 col</td></tr>
+              <tr style="border-bottom:1px solid var(--border-soft)"><td style="padding:.5rem">sm</td><td style="padding:.5rem">≥ 600px</td><td style="padding:.5rem">2 col; licence goes landscape</td></tr>
+              <tr style="border-bottom:1px solid var(--border-soft)"><td style="padding:.5rem">md</td><td style="padding:.5rem">≥ 768px</td><td style="padding:.5rem">3 col; ticket gets a side stub</td></tr>
+              <tr style="border-bottom:1px solid var(--border-soft)"><td style="padding:.5rem">lg</td><td style="padding:.5rem">≥ 1024px</td><td style="padding:.5rem">4 col available</td></tr>
+              <tr><td style="padding:.5rem">xl</td><td style="padding:.5rem">≥ 1280px</td><td style="padding:.5rem">wider gutters</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="sc-sub t-label">.grid--2</h3>
+        <div class="grid grid--2"><div class="sc-box">1</div><div class="sc-box">2</div></div>
+        <h3 class="sc-sub t-label">.grid--3</h3>
+        <div class="grid grid--3"><div class="sc-box">1</div><div class="sc-box">2</div><div class="sc-box">3</div></div>
+        <h3 class="sc-sub t-label">.grid--4</h3>
+        <div class="grid grid--4"><div class="sc-box">1</div><div class="sc-box">2</div><div class="sc-box">3</div><div class="sc-box">4</div></div>
+        <h3 class="sc-sub t-label">.grid--auto</h3>
+        <div class="grid grid--auto"><div class="sc-box">auto</div><div class="sc-box">auto</div><div class="sc-box">auto</div><div class="sc-box">auto</div><div class="sc-box">auto</div></div>
+
+        <h3 class="sc-sub t-label">Images (ratio box, cover)</h3>
+        <div class="grid grid--3">
+          <div class="img-ratio" style="--ratio: 4/3; background: linear-gradient(135deg,#6f7a62,#3a4a3c)"></div>
+          <div class="img-ratio" style="--ratio: 1/1; background: linear-gradient(135deg,#93534a,#5a2e27)"></div>
+          <div class="img-ratio" style="--ratio: 3/4; background: linear-gradient(135deg,#c6b58f,#8a6f4d)"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="surface-forest section--tight">
+    <div class="container container--max">
+      <div class="doc-footer" style="border-top-color: var(--border-on-dark); margin-top:0; color: var(--text-inverse-muted)">
+        <span>The Saniya Archive · Stage 02 showcase</span>
+        <span>Delete showcase.html and js/showcase.js before launch</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/showcase.js"></script>
+</body>
+</html>

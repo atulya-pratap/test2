@@ -1,0 +1,266 @@
+/* ==========================================================================
+   THE SANIYA ARCHIVE — animations.css
+   Stage 02 · Animation library
+   --------------------------------------------------------------------------
+   Principles: tactile, deliberate, short. Things move like paper and ink:
+   they settle, they press, they unfold. Nothing bounces, floats or loops.
+   Timing tokens live in style.css (--dur-*, --ease-*).
+
+   Contents
+     01  Fade in
+     02  Gentle upward reveal (+ stagger)
+     03  Paper unfold
+     04  Stamp impression
+     05  Envelope opening
+     06  Document flip
+     07  Subtle hover movement
+     08  Page transitions
+     09  Typewriter text reveal
+     10  Reduced-motion override (must stay last)
+
+   Triggering: classes with an animation play on load. To play on scroll,
+   add `.js-reveal` + toggle `.is-visible` with IntersectionObserver
+   (see js/showcase.js for a reference implementation).
+   ========================================================================== */
+
+
+/* ==========================================================================
+   01  FADE IN
+   ========================================================================== */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.fade-in {
+  animation: fade-in var(--dur-slow) var(--ease-paper) var(--delay, 0s) both;
+}
+
+
+/* ==========================================================================
+   02  GENTLE UPWARD REVEAL
+   Stagger siblings by setting --delay inline, or use .stagger on the parent.
+   ========================================================================== */
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal-up {
+  animation: reveal-up var(--dur-reveal) var(--ease-paper) var(--delay, 0s) both;
+}
+
+/* Scroll-triggered variant: hidden until .is-visible is added.
+   Content stays visible if JS never runs (the rule only applies under .js). */
+.js .js-reveal { opacity: 0; transform: translateY(14px); }
+.js .js-reveal.is-visible {
+  animation: reveal-up var(--dur-reveal) var(--ease-paper) var(--delay, 0s) both;
+}
+
+.stagger > * { --delay: 0s; }
+.stagger > *:nth-child(2) { --delay: 0.08s; }
+.stagger > *:nth-child(3) { --delay: 0.16s; }
+.stagger > *:nth-child(4) { --delay: 0.24s; }
+.stagger > *:nth-child(5) { --delay: 0.32s; }
+.stagger > *:nth-child(n + 6) { --delay: 0.4s; }   /* cap: no long waits */
+
+
+/* ==========================================================================
+   03  PAPER UNFOLDING
+   A document opens from its top edge like a folded sheet.
+   .unfold      : one fold, vertical
+   .unfold-wide : opens sideways, like a map or a letter
+   ========================================================================== */
+@keyframes unfold-down {
+  0%   { opacity: 0; transform: perspective(1000px) rotateX(-78deg); }
+  40%  { opacity: 1; }
+  100% { opacity: 1; transform: perspective(1000px) rotateX(0deg); }
+}
+@keyframes unfold-side {
+  0%   { opacity: 0; transform: perspective(1000px) rotateY(-70deg); }
+  40%  { opacity: 1; }
+  100% { opacity: 1; transform: perspective(1000px) rotateY(0deg); }
+}
+.unfold {
+  transform-origin: top center;
+  animation: unfold-down 0.9s var(--ease-paper) var(--delay, 0s) both;
+}
+.unfold-wide {
+  transform-origin: left center;
+  animation: unfold-side 0.9s var(--ease-paper) var(--delay, 0s) both;
+}
+/* A faint crease line that fades as the paper flattens */
+.unfold--crease { position: relative; }
+.unfold--crease::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 100%;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 49.6%, rgba(41, 41, 31, 0.14) 50%, transparent 50.4%);
+  animation: fade-in 0.9s var(--ease-paper) reverse both;
+}
+
+
+/* ==========================================================================
+   04  STAMP IMPRESSION
+   The stamp arrives large and slightly rotated, presses down, and settles
+   with a tiny ink spread. Hidden until .is-stamped so it can be triggered
+   by scroll, click or form submit. If JS is unavailable the .no-js fallback
+   shows the finished stamp.
+   ========================================================================== */
+@keyframes stamp-press {
+  0%   { opacity: 0;    transform: rotate(calc(var(--stamp-rot) - 7deg)) scale(1.75); filter: blur(1.5px); }
+  55%  { opacity: 1;    transform: rotate(calc(var(--stamp-rot) + 0.5deg)) scale(0.95); filter: blur(0); }
+  75%  {                transform: rotate(var(--stamp-rot)) scale(1.015); }
+  100% { opacity: var(--stamp-opacity); transform: rotate(var(--stamp-rot)) scale(1); }
+}
+.stamp--press { opacity: 0; }
+.stamp--press.is-stamped {
+  animation: stamp-press 0.55s var(--ease-stamp) var(--delay, 0s) both;
+}
+/* Optional: the paper beneath dips for a moment as the stamp lands */
+@keyframes paper-thud {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(1.5px); }
+}
+.thud { animation: paper-thud 0.2s ease-out calc(var(--delay, 0s) + 0.28s) 1; }
+
+/* No-JS fallback: show stamps immediately */
+.no-js .stamp--press { opacity: var(--stamp-opacity); }
+
+
+/* ==========================================================================
+   05  ENVELOPE OPENING
+   Toggle .is-open on .envelope. Order: seal fades → flap lifts → letter
+   slides up. Closing reverses it.
+   ========================================================================== */
+.envelope__flap {
+  transition: transform 0.6s var(--ease-paper), z-index 0s linear 0.3s;
+}
+.envelope__seal {
+  transition: opacity var(--dur-base) var(--ease-paper), transform var(--dur-base) var(--ease-paper);
+}
+.envelope__letter {
+  transition: transform 0.7s var(--ease-paper) 0.45s;
+}
+.envelope.is-open .envelope__seal  { opacity: 0; transform: translate(-50%, -50%) scale(0.85); pointer-events: none; }
+.envelope.is-open .envelope__flap  { transform: rotateX(180deg); z-index: 0; }
+.envelope.is-open .envelope__letter { transform: translateY(-62%); z-index: 1; }
+
+/* closing: letter goes back first, then flap */
+.envelope:not(.is-open) .envelope__letter { transition-delay: 0s; }
+.envelope:not(.is-open) .envelope__flap   { transition-delay: 0.5s, 0.5s; }
+
+
+/* ==========================================================================
+   06  DOCUMENT FLIP
+   <div class="flip">
+     <div class="flip__inner">
+       <div class="flip__face flip__face--front">…</div>
+       <div class="flip__face flip__face--back">…</div>
+     </div>
+   </div>
+   Toggle .is-flipped. Both faces share one grid cell so height is automatic.
+   ========================================================================== */
+.flip { perspective: 1400px; }
+.flip__inner {
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform 0.8s var(--ease-flip);
+}
+.flip.is-flipped .flip__inner { transform: rotateY(180deg); }
+.flip__face {
+  grid-area: 1 / 1;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+}
+.flip__face--back { transform: rotateY(180deg); }
+/* Hidden face must not be focusable / clickable */
+.flip:not(.is-flipped) .flip__face--back,
+.flip.is-flipped .flip__face--front { pointer-events: none; }
+
+
+/* ==========================================================================
+   07  SUBTLE HOVER MOVEMENT
+   Only on devices that truly hover; touch screens never get stuck states.
+   ========================================================================== */
+.lift {
+  transition: transform var(--dur-base) var(--ease-paper), box-shadow var(--dur-base) var(--ease-paper);
+}
+@media (hover: hover) and (pointer: fine) {
+  .lift:hover { transform: translateY(-3px); box-shadow: var(--shadow-3); }
+  .card--polaroid.lift:hover { transform: rotate(var(--tilt)) translateY(-4px); box-shadow: var(--shadow-photo), 0 14px 22px -6px rgba(41, 41, 31, 0.35); }
+}
+.lift:active { transform: translateY(0); }
+
+/* A document straightens when you look at it */
+.straighten { transition: transform var(--dur-base) var(--ease-paper); }
+@media (hover: hover) and (pointer: fine) {
+  .straighten:hover { transform: rotate(0deg); }
+}
+
+
+/* ==========================================================================
+   08  PAGE TRANSITIONS
+   Two layers: (1) a CSS class pair for hand-rolled transitions, (2) the
+   native cross-document View Transitions API where supported (progressive).
+   ========================================================================== */
+@keyframes page-in  { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes page-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: translateY(-8px); } }
+.page-enter { animation: page-in  0.45s var(--ease-paper) both; }
+.page-exit  { animation: page-out 0.3s  var(--ease-paper) both; }
+
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: page-out 0.28s var(--ease-paper) both; }
+::view-transition-new(root) { animation: page-in  0.4s  var(--ease-paper) both; }
+
+
+/* ==========================================================================
+   09  TYPEWRITER TEXT REVEAL
+   Single line, monospace only (Courier Prime / Special Elite).
+   Set the character count with --tw-chars; speed with --tw-duration.
+   <span class="typewriter" style="--tw-chars:28">Travel authorised. Welcome.</span>
+   ========================================================================== */
+@keyframes typing { from { width: 0; } to { width: calc(var(--tw-chars) * 1ch); } }
+@keyframes caret-blink { 0%, 100% { border-color: transparent; } 50% { border-color: currentColor; } }
+.typewriter {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
+  font-family: var(--font-type);
+  border-right: 0.5ch solid transparent;
+  width: calc(var(--tw-chars, 24) * 1ch);
+  animation:
+    typing var(--tw-duration, 2.4s) steps(var(--tw-chars, 24), end) var(--delay, 0s) backwards,
+    caret-blink 0.8s step-end calc(var(--delay, 0s) + 0.1s) 6;      /* blinks six times, then stops */
+}
+
+
+/* ==========================================================================
+   10  REDUCED MOTION — keep this block LAST
+   Users who ask for less motion get the finished state immediately:
+   stamps already pressed, text already typed, flips and envelopes instant.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+  }
+
+  .js .js-reveal { opacity: 1; transform: none; }
+  .stamp--press { opacity: var(--stamp-opacity); }
+  .typewriter { border-right-color: transparent; }
+  .lift:hover, .straighten:hover { transform: none; }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none !important; }
+}

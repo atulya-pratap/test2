@@ -1,0 +1,1647 @@
+/* ==========================================================================
+   THE SANIYA ARCHIVE — style.css
+   Stage 02 · Design System & Visual Identity
+   --------------------------------------------------------------------------
+   Contents
+     01  Design tokens (colour, type, space, shadow, z-index, motion)
+     02  Reset & base elements
+     03  Typography classes
+     04  Layout utilities (container, stack, grid, cluster)
+     05  Paper surfaces & textures
+     06  Borders, frames & dividers
+     07  Buttons
+     08  Form fields (fill-in-the-blank style)
+     09  Cards (parchment, passport, document, classified, polaroid, ticket)
+     10  Badges & labels
+     11  Document components (header, serial, fields, signature, seal, barcode…)
+     12  Stamps (CSS impression system)
+     13  Envelope (structure only; motion lives in animations.css)
+     14  Icons
+     15  Utilities
+
+   Naming: block, block__element, block--modifier. No framework, no prefix.
+   Mobile-first: everything here is the mobile baseline. Larger screens are
+   handled in responsive.css. Motion is handled in animations.css.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   01  DESIGN TOKENS
+   ========================================================================== */
+:root {
+
+  /* ---- Raw palette ------------------------------------------------------ */
+  /* Brief-mandated primaries */
+  --parchment:      #E9DFC5;
+  --aged-paper:     #C6B58F;
+  --ink:            #29291F;
+  --forest:         #29372C;
+  --oxide:          #763E35;
+
+  /* Supporting tones */
+  --dusty-cream:    #F2EBD6;   /* lightest paper, raised surfaces      */
+  --warm-beige:     #D9CBA6;   /* secondary background                 */
+  --faded-brown:    #8A6F4D;   /* stains, faded print, archived        */
+  --antique-gold:   #A98A3D;   /* seals, rules, ornaments              */
+  --gold-light:     #CDAE66;   /* gold on dark surfaces                */
+  --muted-olive:    #5F6238;   /* approved / field tones               */
+  --ink-soft:       #4A4636;   /* secondary text                       */
+  --ink-muted:      #5E5843;   /* tertiary text (AA on parchment)      */
+  --forest-deep:    #1D2A21;
+  --forest-light:   #3A4F40;
+  --oxide-deep:     #5A2E27;
+  --oxide-light:    #93534A;
+  --stamp-teal:     #2F6F7E;   /* the oval "CALL ME IF YOU GET LOST" ink */
+  --stamp-blue:     #2C4F7C;   /* "certified by" ink                   */
+
+  /* ---- Semantic colour -------------------------------------------------- */
+  /* Backgrounds */
+  --bg-primary:     var(--parchment);
+  --bg-secondary:   var(--warm-beige);
+  --bg-aged:        var(--aged-paper);
+  --bg-inverse:     var(--forest);
+  --bg-inverse-deep:var(--forest-deep);
+
+  /* Surfaces */
+  --surface:        var(--dusty-cream);
+  --surface-raised: #F7F1E0;
+  --surface-sunken: var(--warm-beige);
+  --surface-dark:   var(--forest);
+
+  /* Text */
+  --text-primary:   var(--ink);
+  --text-secondary: var(--ink-soft);
+  --text-muted:     var(--ink-muted);
+  --text-inverse:   var(--parchment);
+  --text-inverse-muted: #BFB597;
+  --text-accent:    var(--oxide);
+  --text-link:      var(--oxide);
+
+  /* Accents */
+  --accent-primary:   var(--forest);
+  --accent-secondary: var(--oxide);
+  --accent-gold:      var(--antique-gold);
+
+  /* Borders */
+  --border-ink:     var(--ink);
+  --border-soft:    rgba(41, 41, 31, 0.28);
+  --border-faint:   rgba(41, 41, 31, 0.14);
+  --border-gold:    var(--antique-gold);
+  --border-on-dark: rgba(233, 223, 197, 0.45);
+
+  /* Interactive states */
+  --interactive:         var(--forest);
+  --interactive-hover:   var(--forest-light);
+  --interactive-active:  var(--forest-deep);
+  --interactive-wash:    rgba(41, 55, 44, 0.08);   /* hover tint on paper */
+  --interactive-wash-strong: rgba(41, 55, 44, 0.16);
+  --focus-ring:          var(--stamp-teal);
+  --focus-ring-on-dark:  var(--gold-light);
+  --disabled-bg:         rgba(41, 41, 31, 0.08);
+  --disabled-text:       rgba(41, 41, 31, 0.45);
+  --disabled-border:     rgba(41, 41, 31, 0.25);
+
+  /* Status */
+  --success:        #3F5B34;
+  --success-wash:   rgba(63, 91, 52, 0.12);
+  --warning:        #7A5212;
+  --warning-wash:   rgba(169, 138, 61, 0.2);
+  --danger:         var(--oxide);
+  --danger-wash:    rgba(118, 62, 53, 0.12);
+  --info:           var(--stamp-teal);
+  --info-wash:      rgba(47, 111, 126, 0.12);
+
+  /* ---- Typography ------------------------------------------------------- */
+  --font-display: "Playfair Display", "Times New Roman", Georgia, serif;  /* headings            */
+  --font-doc:     "Courier Prime", "Courier New", Courier, monospace;      /* official documents  */
+  --font-type:    "Special Elite", "Courier New", Courier, monospace;      /* typewriter notes    */
+  --font-serif:   "Cormorant Garamond", Georgia, "Times New Roman", serif; /* body / supporting   */
+  --font-hand:    "Reenie Beanie", "Special Elite", cursive;               /* filled-in fields & signatures only */
+
+  /* Fluid type scale (mobile-first; clamp handles every width) */
+  --fs-display:   clamp(2.6rem, 1.6rem + 5.2vw, 5rem);
+  --fs-h1:        clamp(2.1rem, 1.5rem + 3vw, 3.4rem);
+  --fs-h2:        clamp(1.6rem, 1.25rem + 1.8vw, 2.4rem);
+  --fs-h3:        clamp(1.25rem, 1.1rem + 0.8vw, 1.65rem);
+  --fs-lead:      clamp(1.3rem, 1.2rem + 0.5vw, 1.55rem);
+  --fs-body:      1.25rem;     /* Cormorant runs small; 20px reads as ~16px */
+  --fs-body-sm:   1.1rem;
+  --fs-doc:       0.9375rem;   /* 15px Courier Prime body inside documents  */
+  --fs-meta:      0.8125rem;   /* 13px metadata                             */
+  --fs-label:     0.75rem;     /* 12px uppercase labels                     */
+  --fs-note:      1.1rem;      /* Special Elite annotations                 */
+  --fs-hand:      1.9rem;      /* Reenie Beanie is small on the line        */
+
+  --lh-tight:     1.1;
+  --lh-heading:   1.2;
+  --lh-snug:      1.35;
+  --lh-body:      1.55;
+  --lh-doc:       1.6;
+
+  --ls-tight:    -0.01em;
+  --ls-normal:    0;
+  --ls-wide:      0.08em;
+  --ls-label:     0.14em;
+  --ls-stamp:     0.2em;
+
+  --fw-regular:   400;
+  --fw-medium:    500;
+  --fw-semibold:  600;
+  --fw-bold:      700;
+
+  /* ---- Spacing (4px base, rem) ----------------------------------------- */
+  --sp-0:   0;
+  --sp-1:   0.25rem;   /*  4 */
+  --sp-2:   0.5rem;    /*  8 */
+  --sp-3:   0.75rem;   /* 12 */
+  --sp-4:   1rem;      /* 16 */
+  --sp-5:   1.5rem;    /* 24 */
+  --sp-6:   2rem;      /* 32 */
+  --sp-7:   3rem;      /* 48 */
+  --sp-8:   4rem;      /* 64 */
+  --sp-9:   6rem;      /* 96 */
+
+  --section-space:  clamp(3rem, 2rem + 5vw, 6rem);
+  --gutter:         1rem;               /* raised in responsive.css */
+  --card-pad:       var(--sp-5);
+  --card-pad-sm:    var(--sp-4);
+  --touch-min:      48px;               /* minimum interactive target */
+
+  /* ---- Widths ----------------------------------------------------------- */
+  --w-narrow:   34rem;    /* single document / form          */
+  --w-content:  44rem;    /* reading column                  */
+  --w-wide:     64rem;    /* card grids                      */
+  --w-max:      76rem;    /* showcase / desktop chrome       */
+
+  /* ---- Radius (documents are square; the licence card is the exception) -- */
+  --radius-0:       0;
+  --radius-1:       2px;
+  --radius-2:       4px;
+  --radius-license: 1.6rem;   /* rounded passport / licence card corner */
+  --radius-round:   50%;
+
+  /* ---- Shadows (printed paper, never glossy UI) ------------------------ */
+  --shadow-1: 0 1px 1px rgba(41, 41, 31, 0.18), 0 2px 4px rgba(41, 41, 31, 0.1);
+  --shadow-2: 0 1px 2px rgba(41, 41, 31, 0.2), 0 4px 8px rgba(41, 41, 31, 0.14), 0 10px 18px -6px rgba(41, 41, 31, 0.16);
+  --shadow-3: 0 2px 3px rgba(41, 41, 31, 0.22), 0 8px 16px rgba(41, 41, 31, 0.16), 0 22px 36px -10px rgba(41, 41, 31, 0.28);
+  --shadow-stack: 0 2px 0 var(--dusty-cream), 0 3px 0 rgba(41, 41, 31, 0.28),
+                  0 5px 0 var(--surface), 0 6px 0 rgba(41, 41, 31, 0.2),
+                  0 14px 22px -6px rgba(41, 41, 31, 0.32);
+  --shadow-hard:  3px 3px 0 var(--ink);
+  --shadow-edge:  inset 0 0 36px rgba(118, 62, 53, 0.14);     /* aged paper edge burn */
+  --shadow-press: inset 0 2px 5px rgba(41, 41, 31, 0.35);
+  --shadow-photo: 0 2px 3px rgba(41, 41, 31, 0.3), 0 10px 18px -4px rgba(41, 41, 31, 0.4);
+
+  /* ---- Layers ----------------------------------------------------------- */
+  --z-below:    -1;
+  --z-base:      0;
+  --z-content:   1;
+  --z-raised:   10;
+  --z-stamp:    20;
+  --z-sticky:  100;
+  --z-overlay: 500;
+  --z-modal:  1000;
+  --z-toast:  1100;
+
+  /* ---- Motion ----------------------------------------------------------- */
+  --dur-fast:   150ms;
+  --dur-base:   280ms;
+  --dur-slow:   600ms;
+  --dur-reveal: 700ms;
+  --ease-paper: cubic-bezier(0.22, 0.61, 0.36, 1);   /* soft settle  */
+  --ease-stamp: cubic-bezier(0.3, 0.8, 0.3, 1);      /* quick press  */
+  --ease-flip:  cubic-bezier(0.45, 0.05, 0.25, 1);
+
+  /* ---- Texture assets (paths are relative to this stylesheet) ----------- */
+  --tx-grain:   url("../assets/textures/grain.svg");
+  --tx-fibers:  url("../assets/textures/fibers.svg");
+  --tx-stain:   url("../assets/textures/stain.svg");
+  --tx-scuff:   url("../assets/textures/scuff.svg");
+  --tx-weave:   url("../assets/textures/weave.svg");
+  --tx-ink-mask:url("../assets/textures/ink-mask.svg");
+  --img-star:       url("../assets/icons/star.svg");
+  --img-star-light: url("../assets/icons/star-light.svg");
+}
+
+
+/* ==========================================================================
+   02  RESET & BASE
+   ========================================================================== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
+  font-family: var(--font-serif);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-body);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  background-image: var(--tx-grain), var(--tx-fibers);
+  background-size: 240px 240px, 420px 420px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  /* keep content clear of phone notches / home bars */
+  padding-left:  env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+
+img, svg, video, canvas { display: block; max-width: 100%; height: auto; }
+img { font-style: italic; }   /* alt text reads as a caption if an image fails */
+
+h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+
+a {
+  color: var(--text-link);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: color var(--dur-fast) var(--ease-paper);
+}
+a:hover { color: var(--oxide-deep); text-decoration-thickness: 2px; }
+
+::selection { background: var(--forest); color: var(--parchment); }
+
+:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+.on-dark :focus-visible,
+.surface-forest :focus-visible { outline-color: var(--focus-ring-on-dark); }
+
+[hidden] { display: none !important; }
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--sp-4); top: -4rem;
+  z-index: var(--z-toast);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--ink); color: var(--parchment);
+  font-family: var(--font-doc); font-size: var(--fs-meta);
+  text-decoration: none;
+}
+.skip-link:focus { top: var(--sp-4); }
+
+
+/* ==========================================================================
+   03  TYPOGRAPHY CLASSES
+   Each font has one job:
+     Playfair Display ........ headings
+     Courier Prime ........... anything printed on an official document
+     Special Elite ........... typewritten annotations / notes
+     Cormorant Garamond ...... body & supporting prose
+     Reenie Beanie ........... ink written by hand (filled fields, signatures)
+   ========================================================================== */
+.t-display {
+  font-family: var(--font-display);
+  font-size: var(--fs-display);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  text-wrap: balance;
+}
+.t-h1, h1 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-tight);
+  text-wrap: balance;
+}
+.t-h2, h2 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-heading);
+  text-wrap: balance;
+}
+.t-h3, h3 {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-snug);
+}
+.t-subhead {
+  font-family: var(--font-serif);
+  font-size: var(--fs-lead);
+  font-style: italic;
+  font-weight: var(--fw-medium);
+  line-height: var(--lh-snug);
+  color: var(--text-secondary);
+}
+.t-lead {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-snug);
+  text-wrap: pretty;
+}
+.t-body    { font-size: var(--fs-body);    line-height: var(--lh-body); text-wrap: pretty; }
+.t-body-sm { font-size: var(--fs-body-sm); line-height: var(--lh-body); }
+
+.t-doc {
+  font-family: var(--font-doc);
+  font-size: var(--fs-doc);
+  line-height: var(--lh-doc);
+  font-weight: var(--fw-regular);
+}
+.t-meta {
+  font-family: var(--font-doc);
+  font-size: var(--fs-meta);
+  line-height: var(--lh-snug);
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+.t-label {
+  font-family: var(--font-doc);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-bold);
+  line-height: 1.3;
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+}
+.t-note {
+  font-family: var(--font-type);
+  font-size: var(--fs-note);
+  line-height: var(--lh-snug);
+  color: var(--text-secondary);
+}
+.t-hand {
+  font-family: var(--font-hand);
+  font-size: var(--fs-hand);
+  line-height: 1;
+  color: var(--forest);
+}
+.t-eyebrow {
+  font-family: var(--font-doc);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-stamp);
+  text-transform: uppercase;
+  color: var(--text-accent);
+}
+.t-caps  { text-transform: uppercase; letter-spacing: var(--ls-wide); }
+.t-center { text-align: center; }
+.t-accent { color: var(--text-accent); }
+.t-muted  { color: var(--text-muted); }
+
+/* Prose: default long-form reading styles */
+.prose > * + * { margin-top: var(--sp-4); }
+.prose p { text-wrap: pretty; max-width: 62ch; }
+.prose em { font-style: italic; }
+.prose strong { font-weight: var(--fw-bold); }
+.prose blockquote {
+  padding-left: var(--sp-4);
+  border-left: 3px double var(--border-gold);
+  font-style: italic;
+  color: var(--text-secondary);
+}
+/* A drop cap for editorial openings */
+.dropcap::first-letter {
+  float: left;
+  font-family: var(--font-display);
+  font-weight: var(--fw-bold);
+  font-size: 3.6em;
+  line-height: 0.82;
+  padding: 0.06em 0.1em 0 0;
+  color: var(--oxide);
+}
+
+
+/* ==========================================================================
+   04  LAYOUT UTILITIES
+   ========================================================================== */
+.container {
+  width: min(100% - 2 * var(--gutter), var(--w-wide));
+  margin-inline: auto;
+}
+.container--narrow  { width: min(100% - 2 * var(--gutter), var(--w-narrow)); }
+.container--content { width: min(100% - 2 * var(--gutter), var(--w-content)); }
+.container--max     { width: min(100% - 2 * var(--gutter), var(--w-max)); }
+
+.section { padding-block: var(--section-space); }
+.section--tight { padding-block: calc(var(--section-space) / 2); }
+
+/* Vertical rhythm: space children by --stack-gap */
+.stack > * + * { margin-top: var(--stack-gap, var(--sp-4)); }
+.stack--sm { --stack-gap: var(--sp-2); }
+.stack--lg { --stack-gap: var(--sp-6); }
+
+/* Horizontal wrapping group (buttons, badges) */
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--cluster-gap, var(--sp-3));
+}
+.cluster--center { justify-content: center; }
+.cluster--lg { --cluster-gap: var(--sp-5); }
+
+/* Grids collapse to one column on mobile; responsive.css widens them */
+.grid { display: grid; gap: var(--grid-gap, var(--sp-5)); }
+.grid--2, .grid--3, .grid--4 { grid-template-columns: 1fr; }
+.grid--auto { grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
+.grid--center { justify-items: center; }
+
+/* Image behaviour */
+.img-cover { width: 100%; height: 100%; object-fit: cover; }
+.img-ratio { aspect-ratio: var(--ratio, 4 / 3); overflow: hidden; }
+.img-ratio > img { width: 100%; height: 100%; object-fit: cover; }
+.img-sepia { filter: sepia(0.35) contrast(0.96) saturate(0.85); }
+
+
+/* ==========================================================================
+   05  PAPER SURFACES & TEXTURES
+   Seven reusable surfaces. All set their own text colour, so a section can
+   swap surface without touching anything inside it.
+     .surface-parchment   clean parchment
+     .surface-aged        aged paper with edge burn
+     .surface-grain       parchment with visible grain & fibres
+     .surface-forest      dark forest-green document stock
+     .surface-letter      old ruled letter paper
+     .surface-certificate parchment + guilloche + gold inner rule
+     .surface-distressed  stained, scuffed document
+   Textures are small tiling SVGs (<2 KB each) in assets/textures/.
+   ========================================================================== */
+.surface-parchment {
+  color: var(--text-primary);
+  background-color: var(--parchment);
+}
+
+.surface-grain {
+  color: var(--text-primary);
+  background-color: var(--parchment);
+  background-image: var(--tx-grain), var(--tx-fibers);
+  background-size: 240px 240px, 420px 420px;
+}
+
+.surface-aged {
+  color: var(--text-primary);
+  background-color: var(--aged-paper);
+  background-image:
+    radial-gradient(ellipse at 50% 45%, rgba(242, 235, 214, 0.5) 0%, rgba(242, 235, 214, 0) 70%),
+    var(--tx-fibers),
+    var(--tx-grain);
+  background-size: 100% 100%, 420px 420px, 240px 240px;
+  box-shadow: var(--shadow-edge);
+}
+
+.surface-forest {
+  color: var(--text-inverse);
+  background-color: var(--forest);
+  background-image:
+    radial-gradient(ellipse at 50% 30%, rgba(90, 120, 96, 0.28) 0%, rgba(41, 55, 44, 0) 70%),
+    var(--tx-weave),
+    var(--tx-grain);
+  background-size: 100% 100%, 8px 8px, 240px 240px;
+  --text-secondary: var(--text-inverse-muted);
+  --text-muted: var(--text-inverse-muted);
+  --text-accent: var(--gold-light);
+  --text-link: var(--gold-light);
+  --border-ink: var(--parchment);
+  --border-soft: var(--border-on-dark);
+}
+
+/* Cream stock with faint rules and a left margin line, like a written letter. */
+.surface-letter {
+  color: var(--text-primary);
+  background-color: var(--dusty-cream);
+  background-image:
+    linear-gradient(90deg, transparent 3.2rem, rgba(118, 62, 53, 0.28) 3.2rem,
+      rgba(118, 62, 53, 0.28) calc(3.2rem + 1px), transparent calc(3.2rem + 1px)),
+    repeating-linear-gradient(180deg, transparent 0, transparent 1.74rem,
+      rgba(47, 111, 126, 0.2) 1.74rem, rgba(47, 111, 126, 0.2) calc(1.74rem + 1px)),
+    linear-gradient(90deg, rgba(41, 41, 31, 0) 48%, rgba(41, 41, 31, 0.06) 50%, rgba(41, 41, 31, 0) 52%), /* centre fold */
+    var(--tx-fibers);
+  background-size: 100% 100%, 100% 1.75rem, 100% 100%, 420px 420px;
+  background-position: 0 0, 0 1.2rem, 0 0, 0 0;
+  line-height: 1.75rem;
+}
+.surface-letter > * { padding-left: 4rem; }   /* keep text right of the margin line */
+
+/* Certificate: soft lit centre, guilloche rosette, double gold inner rule. */
+.surface-certificate {
+  position: relative;
+  color: var(--text-primary);
+  background-color: var(--parchment);
+  background-image:
+    radial-gradient(circle at 50% 50%, rgba(255, 252, 240, 0.65) 0%, rgba(255, 252, 240, 0) 62%),
+    repeating-radial-gradient(circle at 50% 50%, rgba(169, 138, 61, 0.1) 0 1px, transparent 1px 7px),
+    var(--tx-grain);
+  background-size: 100% 100%, 100% 100%, 240px 240px;
+}
+.surface-certificate::before {
+  content: "";
+  position: absolute;
+  inset: var(--sp-2);
+  border: 3px double var(--border-gold);
+  pointer-events: none;
+}
+
+/* Distressed: coffee-ring stains, scuffs and a tea-coloured edge. */
+.surface-distressed {
+  color: var(--text-primary);
+  background-color: var(--parchment);
+  background-image:
+    var(--tx-stain),
+    var(--tx-scuff),
+    radial-gradient(ellipse at 50% 50%, rgba(233, 223, 197, 0) 55%, rgba(138, 111, 77, 0.35) 100%),
+    var(--tx-grain);
+  background-size: 140% 140%, 360px 360px, 100% 100%, 240px 240px;
+  background-position: 30% 40%, 0 0, 0 0, 0 0;
+  box-shadow: var(--shadow-edge);
+}
+
+
+/* ==========================================================================
+   06  BORDERS, FRAMES & DIVIDERS
+   ========================================================================== */
+.border-ink     { border: 1px solid var(--border-ink); }
+.border-ink-2   { border: 2px solid var(--border-ink); }
+.border-double  { border: 4px double var(--border-ink); }
+.border-dashed  { border: 2px dashed var(--border-ink); }
+.border-soft    { border: 1px solid var(--border-soft); }
+.border-gold    { border: 3px double var(--border-gold); }
+
+/* Inset keyline: a printed rule set inside the paper edge */
+.border-inset { position: relative; }
+.border-inset::after {
+  content: "";
+  position: absolute;
+  inset: var(--sp-2);
+  border: 1px solid var(--border-ink);
+  pointer-events: none;
+}
+
+/* Decorative corners: four L-shaped brackets, size via --corner-size */
+.frame-corners {
+  --corner-size: 1.4rem;
+  --corner-weight: 2px;
+  --corner-color: var(--border-ink);
+  --corner-inset: var(--sp-2);
+  position: relative;
+}
+.frame-corners::before {
+  content: "";
+  position: absolute;
+  inset: var(--corner-inset);
+  pointer-events: none;
+  background:
+    linear-gradient(var(--corner-color), var(--corner-color)) top left     / var(--corner-size) var(--corner-weight),
+    linear-gradient(var(--corner-color), var(--corner-color)) top left     / var(--corner-weight) var(--corner-size),
+    linear-gradient(var(--corner-color), var(--corner-color)) top right    / var(--corner-size) var(--corner-weight),
+    linear-gradient(var(--corner-color), var(--corner-color)) top right    / var(--corner-weight) var(--corner-size),
+    linear-gradient(var(--corner-color), var(--corner-color)) bottom left  / var(--corner-size) var(--corner-weight),
+    linear-gradient(var(--corner-color), var(--corner-color)) bottom left  / var(--corner-weight) var(--corner-size),
+    linear-gradient(var(--corner-color), var(--corner-color)) bottom right / var(--corner-size) var(--corner-weight),
+    linear-gradient(var(--corner-color), var(--corner-color)) bottom right / var(--corner-weight) var(--corner-size);
+  background-repeat: no-repeat;
+}
+.frame-corners--gold { --corner-color: var(--antique-gold); }
+
+/* Star frame: a ring of stars like the licence card. The stars sit in ::before
+   (top & bottom rows) and ::after (left & right columns); `space` repeat keeps
+   them evenly distributed with none clipped, at any width. */
+.frame-stars {
+  --star-size: 1.35rem;
+  --star-edge: 0.55rem;
+  --star-gap: 0.6rem;
+  --star-img-active: var(--img-star);
+  position: relative;
+  padding: calc(var(--star-edge) + var(--star-size) + var(--sp-4));
+}
+.frame-stars--light { --star-img-active: var(--img-star-light); }
+.frame-stars::before,
+.frame-stars::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  background-image: var(--star-img-active), var(--star-img-active);
+}
+.frame-stars::before {
+  inset: var(--star-edge);
+  background-size: calc(var(--star-size) * 2.3) var(--star-size);   /* wider tile = breathing room */
+  background-position: top left, bottom left;
+  background-repeat: space no-repeat, space no-repeat;
+}
+.frame-stars::after {
+  inset: calc(var(--star-edge) + var(--star-size) + var(--star-gap)) var(--star-edge);
+  background-size: var(--star-size) calc(var(--star-size) * 2.3);
+  background-position: top left, top right;
+  background-repeat: no-repeat space, no-repeat space;
+}
+.frame-stars > * { position: relative; z-index: var(--z-content); }
+
+/* Dividers. Optional child (icon / text) sits in the middle. */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  color: var(--border-ink);
+  margin-block: var(--sp-5);
+}
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: currentColor;
+}
+.divider > * { flex: none; font-size: var(--fs-label); }
+.divider--double::before,
+.divider--double::after { height: 5px; background: none; border-block: 1px solid currentColor; }
+.divider--dashed::before,
+.divider--dashed::after { background: none; border-top: 2px dashed currentColor; height: 0; }
+.divider--dotted::before,
+.divider--dotted::after { background: none; border-top: 2px dotted currentColor; height: 0; }
+.divider--gold { color: var(--antique-gold); }
+
+/* Ornate: line — diamond — line, no child required */
+.divider--ornate { gap: 0; }
+.divider--ornate::before { background: linear-gradient(90deg, transparent, currentColor); }
+.divider--ornate::after  { background: linear-gradient(270deg, transparent, currentColor); }
+.divider--ornate > * { display: none; }
+.divider--ornate span:first-child { display: block; }
+.divider__diamond {
+  display: block;
+  width: 0.55rem; height: 0.55rem;
+  margin-inline: var(--sp-3);
+  background: currentColor;
+  transform: rotate(45deg);
+}
+
+/* Perforation: the tear-line on a ticket */
+.perforation {
+  height: 0;
+  border-top: 2px dashed var(--border-ink);
+  opacity: 0.7;
+}
+
+
+/* ==========================================================================
+   07  BUTTONS
+   .btn + one of: --primary --secondary --text --doc, optional --danger --sm
+   --block. Disabled: [disabled], [aria-disabled="true"] or .is-disabled.
+   All hit-targets are at least 48px tall.
+   ========================================================================== */
+.btn {
+  --btn-bg: transparent;
+  --btn-fg: var(--ink);
+  --btn-border: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  min-height: var(--touch-min);
+  min-width: var(--touch-min);
+  padding: 0.7rem 1.5rem;
+  font-family: var(--font-doc);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-label);
+  line-height: 1.2;
+  text-transform: uppercase;
+  text-decoration: none;
+  text-align: center;
+  color: var(--btn-fg);
+  background: var(--btn-bg);
+  border: 2px solid var(--btn-border);
+  border-radius: var(--radius-1);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  transition:
+    background-color var(--dur-fast) var(--ease-paper),
+    color var(--dur-fast) var(--ease-paper),
+    border-color var(--dur-fast) var(--ease-paper),
+    box-shadow var(--dur-fast) var(--ease-paper),
+    transform var(--dur-fast) var(--ease-paper);
+}
+.btn:hover { text-decoration: none; }
+.btn:active { transform: translateY(1px); }
+
+/* Primary: forest-green ink block */
+.btn--primary {
+  --btn-bg: var(--forest);
+  --btn-fg: var(--parchment);
+  --btn-border: var(--forest-deep);
+  box-shadow: inset 0 0 0 1px rgba(233, 223, 197, 0.18), var(--shadow-1);
+}
+.btn--primary:hover  { --btn-bg: var(--forest-light); color: var(--parchment); }
+.btn--primary:active { --btn-bg: var(--forest-deep);  box-shadow: var(--shadow-press); }
+
+/* Secondary: outlined */
+.btn--secondary { --btn-border: var(--ink); }
+.btn--secondary:hover  { --btn-bg: var(--interactive-wash); color: var(--ink); }
+.btn--secondary:active { --btn-bg: var(--interactive-wash-strong); }
+
+/* Text-only */
+.btn--text {
+  --btn-fg: var(--oxide);
+  --btn-border: transparent;
+  padding-inline: var(--sp-3);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.35em;
+}
+.btn--text:hover  { --btn-fg: var(--oxide-deep); --btn-bg: var(--danger-wash); text-decoration-thickness: 2px; }
+.btn--text:active { --btn-bg: rgba(118, 62, 53, 0.2); }
+
+/* Vintage document button: a paper tag with a hard printed shadow */
+.btn--doc {
+  --btn-bg: var(--dusty-cream);
+  --btn-fg: var(--ink);
+  --btn-border: var(--ink);
+  font-family: var(--font-type);
+  font-weight: var(--fw-regular);
+  font-size: 0.95rem;
+  letter-spacing: 0.1em;
+  padding-inline: 1.75rem;
+  box-shadow: var(--shadow-hard), inset 0 0 0 3px var(--dusty-cream), inset 0 0 0 4px var(--ink);
+}
+.btn--doc:hover  { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--ink), inset 0 0 0 3px var(--dusty-cream), inset 0 0 0 4px var(--ink); }
+.btn--doc:active { transform: translate(3px, 3px);   box-shadow: 0 0 0 var(--ink), inset 0 0 0 3px var(--dusty-cream), inset 0 0 0 4px var(--ink); }
+
+/* Modifiers */
+.btn--danger  { --btn-bg: var(--oxide); --btn-fg: var(--parchment); --btn-border: var(--oxide-deep); }
+.btn--danger:hover  { --btn-bg: var(--oxide-light); color: var(--parchment); }
+.btn--danger:active { --btn-bg: var(--oxide-deep); }
+.btn--sm    { min-height: 44px; padding: 0.5rem 1rem; font-size: var(--fs-label); }
+.btn--block { display: flex; width: 100%; }
+
+/* On dark (forest) surfaces */
+.on-dark .btn--primary, .surface-forest .btn--primary {
+  --btn-bg: var(--parchment); --btn-fg: var(--forest-deep); --btn-border: var(--parchment);
+}
+.on-dark .btn--primary:hover, .surface-forest .btn--primary:hover { --btn-bg: #fff9e6; color: var(--forest-deep); }
+.on-dark .btn--secondary, .surface-forest .btn--secondary { --btn-fg: var(--parchment); --btn-border: var(--parchment); }
+.on-dark .btn--secondary:hover, .surface-forest .btn--secondary:hover { --btn-bg: rgba(233, 223, 197, 0.12); color: var(--parchment); }
+.on-dark .btn--text, .surface-forest .btn--text { --btn-fg: var(--gold-light); }
+
+/* Disabled */
+.btn:disabled,
+.btn[aria-disabled="true"],
+.btn.is-disabled {
+  --btn-bg: var(--disabled-bg);
+  --btn-fg: var(--disabled-text);
+  --btn-border: var(--disabled-border);
+  color: var(--disabled-text);
+  background: var(--disabled-bg);
+  border-color: var(--disabled-border);
+  border-style: dashed;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+  text-decoration: none;
+  pointer-events: none;
+}
+
+
+/* ==========================================================================
+   08  FORM FIELDS
+   Fields look like blanks on a printed form: a typed label above a ruled line.
+   ========================================================================== */
+.input,
+.textarea {
+  display: block;
+  width: 100%;
+  min-height: var(--touch-min);
+  padding: 0.6rem 0.75rem;
+  font-family: var(--font-doc);
+  font-size: 1rem;               /* >=16px stops iOS zooming on focus */
+  color: var(--ink);
+  background: rgba(247, 241, 224, 0.7);
+  border: 1px solid var(--border-ink);
+  border-bottom-width: 2px;
+  border-radius: var(--radius-1);
+  transition: background-color var(--dur-fast) var(--ease-paper), box-shadow var(--dur-fast) var(--ease-paper);
+}
+.input::placeholder, .textarea::placeholder { color: var(--text-muted); font-style: italic; }
+.input:hover, .textarea:hover { background: var(--surface-raised); }
+.input:focus-visible, .textarea:focus-visible {
+  background: var(--surface-raised);
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+.input:disabled { background: var(--disabled-bg); color: var(--disabled-text); border-style: dashed; cursor: not-allowed; }
+.input[aria-invalid="true"] { border-color: var(--danger); box-shadow: inset 3px 0 0 var(--danger); }
+.textarea { min-height: 7rem; resize: vertical; line-height: var(--lh-doc); }
+.field-label { display: block; margin-bottom: var(--sp-1); }
+.field-hint  { margin-top: var(--sp-1); }
+
+
+/* ==========================================================================
+   09  CARDS
+   All cards are square-ish paper. Surfaces are combinable:
+     <article class="card surface-aged"> … </article>
+   ========================================================================== */
+
+/* ---- A. Standard parchment card ---------------------------------------- */
+.card {
+  position: relative;
+  padding: var(--card-pad);
+  background-color: var(--surface);
+  background-image: var(--tx-grain);
+  background-size: 240px 240px;
+  border: 1px solid var(--border-ink);
+  border-radius: var(--radius-1);
+  box-shadow: var(--shadow-2);
+  color: var(--text-primary);
+}
+.card--flat    { box-shadow: none; }
+.card--stacked { box-shadow: var(--shadow-stack); }
+.card--tight   { padding: var(--card-pad-sm); }
+.card__title   { font-family: var(--font-display); font-size: var(--fs-h3); font-weight: var(--fw-semibold); line-height: var(--lh-snug); }
+.card__meta    { margin-bottom: var(--sp-2); }
+.card__body    { margin-top: var(--sp-3); }
+.card__footer  { margin-top: var(--sp-4); padding-top: var(--sp-3); border-top: 1px dashed var(--border-soft); }
+
+/* ---- B. Passport / licence card ----------------------------------------
+   Rounded card with a star frame, photo on the left and fields on the right.
+   Reproduces the layout of the "Permanent License of Travel". */
+.card--passport {
+  --star-size: 1.1rem;
+  --star-edge: 0.5rem;
+  padding-block: calc(var(--star-edge) + var(--star-size) + var(--sp-4));
+  border: 2px solid var(--ink);
+  border-radius: var(--radius-license);
+  box-shadow: var(--shadow-3), inset 0 0 0 1px rgba(242, 235, 214, 0.5), var(--shadow-edge);
+  background-color: #EBDDB8;
+  background-image:
+    radial-gradient(ellipse at 50% 40%, rgba(255, 250, 230, 0.55), rgba(255, 250, 230, 0) 70%),
+    var(--tx-stain), var(--tx-fibers), var(--tx-grain);
+  background-size: 100% 100%, 160% 160%, 420px 420px, 240px 240px;
+  background-position: 0 0, 70% 100%, 0 0, 0 0;
+}
+.passport__layout { display: grid; gap: var(--sp-5); }
+.passport__title {
+  font-family: var(--font-doc);
+  font-weight: var(--fw-bold);
+  font-size: 0.95rem;
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  text-align: center;
+}
+.passport__number {
+  margin-top: var(--sp-1);
+  font-family: var(--font-doc);
+  font-weight: var(--fw-bold);
+  font-size: 1.4rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+/* ---- C. Document card --------------------------------------------------- */
+.card--document {
+  padding: var(--sp-5);
+  background-color: var(--dusty-cream);
+  background-image: var(--tx-fibers), var(--tx-grain);
+  background-size: 420px 420px, 240px 240px;
+  border: 1px solid var(--ink);
+  box-shadow: var(--shadow-2);
+  font-family: var(--font-doc);
+  font-size: var(--fs-doc);
+  line-height: var(--lh-doc);
+}
+.card--document::after {          /* inner keyline */
+  content: "";
+  position: absolute;
+  inset: 0.4rem;
+  border: 1px solid var(--border-soft);
+  pointer-events: none;
+}
+.card--document .card__title { font-family: var(--font-doc); font-weight: var(--fw-bold); text-transform: uppercase; letter-spacing: var(--ls-wide); font-size: 1rem; }
+
+/* ---- D. Classified document card --------------------------------------- */
+.card--classified {
+  --text-secondary: var(--text-inverse-muted);
+  --border-ink: var(--parchment);
+  overflow: hidden;
+  padding: var(--sp-5);
+  padding-top: calc(var(--sp-5) + 1.9rem);
+  color: var(--text-inverse);
+  background-color: var(--forest);
+  background-image:
+    radial-gradient(ellipse at 50% 20%, rgba(90, 120, 96, 0.25), rgba(41, 55, 44, 0) 70%),
+    var(--tx-weave), var(--tx-grain);
+  background-size: 100% 100%, 8px 8px, 240px 240px;
+  border: 1px solid var(--forest-deep);
+  outline: 1px solid var(--border-on-dark);
+  outline-offset: -0.45rem;
+  font-family: var(--font-doc);
+  font-size: var(--fs-doc);
+  line-height: var(--lh-doc);
+}
+.card--classified::before {       /* diagonal-hatched CLASSIFIED ribbon */
+  content: "CLASSIFIED";
+  position: absolute;
+  inset: 0 0 auto 0;
+  padding: 0.35rem 0;
+  text-align: center;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-label);
+  letter-spacing: 0.6em;
+  text-indent: 0.6em;
+  color: var(--parchment);
+  background:
+    repeating-linear-gradient(135deg, rgba(0, 0, 0, 0.14) 0 6px, transparent 6px 12px),
+    var(--oxide);
+  border-bottom: 1px solid var(--oxide-deep);
+}
+.card--classified .card__title { font-family: var(--font-doc); text-transform: uppercase; letter-spacing: var(--ls-wide); font-size: 1rem; font-weight: var(--fw-bold); }
+
+/* Redaction bar. Reveals on hover/focus so keyboard & touch users can read it
+   (tabindex="0" in markup). Text stays in the DOM for screen readers. */
+.redact {
+  padding: 0 0.25em;
+  color: transparent;
+  background: var(--ink);
+  border-radius: 1px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  cursor: help;
+  transition: color var(--dur-base) var(--ease-paper), background-color var(--dur-base) var(--ease-paper);
+}
+.card--classified .redact { background: #0f1511; }
+.redact:hover,
+.redact:focus-visible,
+.redact.is-revealed { color: inherit; background: rgba(118, 62, 53, 0.35); }
+
+/* ---- E. Photograph / Polaroid ------------------------------------------ */
+.card--polaroid {
+  --tilt: -2deg;
+  position: relative;
+  max-width: 17rem;
+  padding: 0.8rem 0.8rem 0.4rem;
+  background-color: #F6F0DF;
+  background-image: var(--tx-grain);
+  background-size: 240px 240px;
+  border: 1px solid rgba(41, 41, 31, 0.25);
+  border-radius: var(--radius-1);
+  box-shadow: var(--shadow-photo);
+  transform: rotate(var(--tilt));
+}
+.card--polaroid::before {         /* masking-tape strip */
+  content: "";
+  position: absolute;
+  top: -0.8rem; left: 50%;
+  width: 5.2rem; height: 1.6rem;
+  transform: translateX(-50%) rotate(2deg);
+  background: rgba(205, 174, 102, 0.55);
+  border-inline: 1px dashed rgba(41, 41, 31, 0.15);
+  box-shadow: 0 1px 2px rgba(41, 41, 31, 0.15);
+}
+.polaroid__photo {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 40% 35%, rgba(233, 223, 197, 0.35), transparent 60%),
+    linear-gradient(160deg, #6f7a62, #3a4a3c);
+  box-shadow: inset 0 0 0 1px rgba(41, 41, 31, 0.5), inset 0 0 18px rgba(0, 0, 0, 0.35);
+}
+.polaroid__photo > img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.2) contrast(0.95); }
+.polaroid__caption {
+  padding: 0.7rem 0.25rem 0.5rem;
+  font-family: var(--font-hand);
+  font-size: 1.7rem;
+  line-height: 1.05;
+  text-align: center;
+  color: var(--forest);
+}
+.card--polaroid.tilt-r { --tilt: 2.5deg; }
+.card--polaroid.tilt-0 { --tilt: 0deg; }
+
+/* Photo with a thin offset keyline and typewritten caption (as on the licence) */
+.photo-frame { position: relative; padding: 0.4rem; border: 1px solid var(--border-soft); }
+.photo-frame > img,
+.photo-frame__image {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  background: linear-gradient(160deg, #6f7a62, #3a4a3c);
+  box-shadow: var(--shadow-photo);
+}
+.photo-frame figcaption {
+  margin-top: var(--sp-2);
+  font-family: var(--font-doc);
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+/* ---- F. Ticket ---------------------------------------------------------- 
+   Wrap in .ticket for the drop-shadow (mask would clip a box-shadow):
+   <div class="ticket"><article class="card--ticket">…</article></div>
+   Put the stub in .ticket__stub; the notch lines up with --stub-y. */
+.ticket { filter: drop-shadow(0 2px 2px rgba(41, 41, 31, 0.25)) drop-shadow(0 8px 10px rgba(41, 41, 31, 0.18)); }
+.card--ticket {
+  --notch: 0.7rem;
+  --stub-y: 72%;
+  position: relative;
+  padding: var(--sp-5);
+  background-color: var(--dusty-cream);
+  background-image:
+    linear-gradient(90deg, rgba(118, 62, 53, 0.08), rgba(118, 62, 53, 0) 18%),
+    var(--tx-fibers), var(--tx-grain);
+  background-size: 100% 100%, 420px 420px, 240px 240px;
+  font-family: var(--font-doc);
+  font-size: var(--fs-doc);
+  line-height: var(--lh-doc);
+  border-radius: var(--radius-1);
+  -webkit-mask:
+    radial-gradient(circle var(--notch) at 0 var(--stub-y), #0000 97%, #000) left  / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% var(--stub-y), #0000 97%, #000) right / 51% 100% no-repeat;
+          mask:
+    radial-gradient(circle var(--notch) at 0 var(--stub-y), #0000 97%, #000) left  / 51% 100% no-repeat,
+    radial-gradient(circle var(--notch) at 100% var(--stub-y), #0000 97%, #000) right / 51% 100% no-repeat;
+}
+.card--ticket::before {           /* dashed ticket border */
+  content: "";
+  position: absolute;
+  inset: 0.45rem;
+  border: 2px dashed var(--border-ink);
+  opacity: 0.75;
+  pointer-events: none;
+}
+.ticket__route {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  font-family: var(--font-display);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-bold);
+  line-height: 1;
+}
+.ticket__route .icon { font-size: 1.4rem; color: var(--oxide); flex: none; }
+.ticket__stub {
+  margin-top: var(--sp-4);
+  padding-top: var(--sp-4);
+  border-top: 2px dashed var(--border-ink);
+}
+
+
+/* ==========================================================================
+   10  BADGES & LABELS
+   Status is carried by shape AND colour (never colour alone).
+     approved ● verified ◆ classified ■ pending ○ archived — expired ×
+   ========================================================================== */
+.badge {
+  --badge-fg: var(--ink);
+  --badge-bg: transparent;
+  --badge-border: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.3em 0.7em 0.3em 0.6em;
+  font-family: var(--font-doc);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-label);
+  line-height: 1.2;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--badge-fg);
+  background: var(--badge-bg);
+  border: 1.5px solid var(--badge-border);
+  border-radius: var(--radius-1);
+}
+.badge::before {
+  content: "";
+  flex: none;
+  width: 0.6em; height: 0.6em;
+  background: currentColor;
+  border-radius: 50%;
+}
+.badge--approved   { --badge-fg: var(--success); --badge-bg: var(--success-wash); --badge-border: var(--success); }
+.badge--verified   { --badge-fg: var(--stamp-teal); --badge-bg: var(--info-wash); --badge-border: var(--stamp-teal); }
+.badge--verified::before { border-radius: 0; transform: rotate(45deg) scale(0.9); }
+.badge--classified { --badge-fg: var(--parchment); --badge-bg: var(--ink); --badge-border: var(--ink); }
+.badge--classified::before { border-radius: 0; }
+.badge--pending    { --badge-fg: var(--warning); --badge-bg: var(--warning-wash); --badge-border: var(--warning); }
+.badge--pending::before { background: none; border: 2px solid currentColor; }
+.badge--archived   { --badge-fg: var(--faded-brown); --badge-border: var(--faded-brown); border-style: dashed; color: #6D563A; }
+.badge--archived::before { width: 0.8em; height: 2px; border-radius: 0; }
+.badge--expired    { --badge-fg: var(--oxide); --badge-bg: var(--danger-wash); --badge-border: var(--oxide); text-decoration: line-through; text-decoration-thickness: 1.5px; }
+.badge--expired::before {
+  background: none; width: 0.8em; height: 0.8em;
+  background:
+    linear-gradient(45deg,  transparent 42%, currentColor 42% 58%, transparent 58%),
+    linear-gradient(-45deg, transparent 42%, currentColor 42% 58%, transparent 58%);
+  border-radius: 0;
+}
+.badge--solid.badge--approved { --badge-fg: var(--parchment); --badge-bg: var(--success); }
+.badge--solid.badge--pending  { --badge-fg: var(--ink); --badge-bg: var(--gold-light); --badge-border: var(--antique-gold); }
+.badge--solid.badge--expired  { --badge-fg: var(--parchment); --badge-bg: var(--oxide); }
+
+/* Plain label: a typed field heading */
+.label {
+  display: inline-block;
+  padding: 0.15em 0.5em;
+  font-family: var(--font-doc);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  border-bottom: 1px solid currentColor;
+}
+/* Label-maker strip: embossed tape label */
+.label--tape {
+  color: var(--parchment);
+  background: var(--ink);
+  border: 0;
+  border-radius: 1px;
+  letter-spacing: 0.22em;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25) inset;
+}
+
+
+/* ==========================================================================
+   11  DOCUMENT COMPONENTS
+   ========================================================================== */
+
+/* Official header: agency lines above a double rule */
+.doc-header {
+  text-align: center;
+  padding-bottom: var(--sp-4);
+  margin-bottom: var(--sp-5);
+  border-bottom: 4px double var(--border-ink);
+}
+.doc-header__eyebrow {
+  font-family: var(--font-doc);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-stamp);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.doc-header__title {
+  margin-top: var(--sp-1);
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 0.9rem + 1.4vw, 1.6rem);
+  font-weight: var(--fw-bold);
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.doc-header__sub {
+  margin-top: var(--sp-2);
+  font-family: var(--font-doc);
+  font-size: var(--fs-meta);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+}
+.doc-header__est {
+  margin-top: var(--sp-1);
+  font-family: var(--font-type);
+  font-size: var(--fs-meta);
+  letter-spacing: 0.3em;
+  color: var(--text-secondary);
+}
+.doc-header .icon { font-size: 1.6rem; margin-bottom: var(--sp-2); color: var(--ink); }
+
+/* Serial number */
+.serial {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5em;
+  font-family: var(--font-doc);
+  font-weight: var(--fw-bold);
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.serial__label { font-size: var(--fs-label); letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--text-secondary); }
+.serial--boxed { padding: 0.2em 0.6em; border: 2px solid currentColor; outline: 1px solid currentColor; outline-offset: 2px; }
+
+/* Typed label + handwritten value on a dotted leader.
+   <div class="doc-field"><span class="doc-field__label">Issued to</span>
+        <span class="doc-field__value">Name</span></div> */
+.doc-field {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-3);
+  padding-block: 0.15rem;
+}
+.doc-field__label {
+  flex: none;
+  font-family: var(--font-doc);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-bold);
+  color: var(--text-secondary);
+}
+.doc-field__value {
+  flex: 1;
+  min-width: 0;
+  min-height: 2.4rem;
+  padding-bottom: 0.05em;
+  font-family: var(--font-hand);
+  font-size: var(--fs-hand);
+  line-height: 1.1;
+  text-align: center;
+  color: var(--forest);
+  border-bottom: 2px dotted var(--border-ink);
+  overflow-wrap: anywhere;
+}
+.doc-field__value--typed { font-family: var(--font-doc); font-size: 1rem; font-weight: var(--fw-bold); color: var(--ink); text-align: left; }
+
+/* Issue date */
+.issue-date { display: inline-flex; flex-direction: column; gap: 0.15rem; }
+.issue-date__label { font-family: var(--font-doc); font-size: var(--fs-label); letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--text-secondary); }
+.issue-date__value { font-family: var(--font-doc); font-size: 1.05rem; font-weight: var(--fw-bold); letter-spacing: 0.04em; }
+
+/* Signature block */
+.signature-block { display: block; max-width: 20rem; }
+.signature-block__ink {
+  display: block;
+  min-height: 3.4rem;
+  padding-inline: var(--sp-3);
+  font-family: var(--font-hand);
+  font-size: 2.6rem;
+  line-height: 1.1;
+  color: var(--forest-deep);
+  transform: rotate(-3deg);
+  transform-origin: left bottom;
+}
+.signature-block__line { border-bottom: 2px dotted var(--border-ink); }
+.signature-block__caption {
+  margin-top: var(--sp-1);
+  font-family: var(--font-doc);
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--text-secondary);
+  text-align: right;
+}
+.signature-block--center .signature-block__caption { text-align: center; }
+
+/* Document footer */
+.doc-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-3) var(--sp-5);
+  margin-top: var(--sp-5);
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--border-ink);
+  font-family: var(--font-doc);
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* Barcode placeholder: swap for a real <img> or SVG later */
+.barcode { display: inline-block; text-align: center; }
+.barcode__bars {
+  display: block;
+  width: 10.5rem;
+  height: 2.8rem;
+  background: repeating-linear-gradient(90deg,
+    var(--ink) 0 2px, transparent 2px 4px,
+    var(--ink) 4px 5px, transparent 5px 8px,
+    var(--ink) 8px 11px, transparent 11px 12px,
+    var(--ink) 12px 13px, transparent 13px 16px,
+    var(--ink) 16px 18px, transparent 18px 19px,
+    var(--ink) 19px 22px, transparent 22px 25px);
+}
+.barcode__text {
+  display: block;
+  margin-top: 0.2rem;
+  font-family: var(--font-doc);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+}
+
+/* QR slot: a framed square that a real QR image drops into */
+.qr-slot {
+  display: grid;
+  place-items: center;
+  width: 6rem; height: 6rem;
+  padding: 0.3rem;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-ink);
+  font-family: var(--font-doc);
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--text-muted);
+}
+.qr-slot > img { width: 100%; height: 100%; image-rendering: pixelated; }
+
+/* Official seal: an embossed gold medallion. --seal-size sets scale. */
+.seal {
+  --seal-size: 6.5rem;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: var(--seal-size);
+  height: var(--seal-size);
+  border-radius: 50%;
+  color: #5C4513;
+  background:
+    radial-gradient(circle at 34% 28%, #EAD79B 0%, #CDAE66 38%, #A98A3D 78%, #8C6F2B 100%);
+  box-shadow:
+    0 1px 2px rgba(41, 41, 31, 0.5),
+    0 4px 8px rgba(41, 41, 31, 0.3),
+    inset 0 1px 1px rgba(255, 246, 214, 0.7),
+    inset 0 -2px 3px rgba(92, 69, 19, 0.5);
+}
+.seal::before {                    /* beaded ring */
+  content: "";
+  position: absolute;
+  inset: 7%;
+  border-radius: 50%;
+  border: 2px dotted rgba(92, 69, 19, 0.7);
+}
+.seal::after {                     /* inner engraved ring */
+  content: "";
+  position: absolute;
+  inset: 17%;
+  border-radius: 50%;
+  border: 1.5px solid rgba(92, 69, 19, 0.65);
+  box-shadow: 0 1px 0 rgba(255, 246, 214, 0.55), inset 0 1px 0 rgba(255, 246, 214, 0.35);
+}
+.seal__mark { position: relative; z-index: 1; font-size: calc(var(--seal-size) * 0.3); color: #5C4513; filter: drop-shadow(0 1px 0 rgba(255, 246, 214, 0.6)); }
+.seal--wax {
+  color: var(--parchment);
+  border-radius: 46% 54% 50% 50% / 52% 46% 54% 48%;
+  background: radial-gradient(circle at 34% 28%, #A9574B 0%, #7E4036 45%, #5A2E27 100%);
+  box-shadow: 0 2px 3px rgba(41, 41, 31, 0.5), 0 6px 10px rgba(41, 41, 31, 0.3), inset 0 1px 1px rgba(255, 190, 170, 0.4), inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+}
+.seal--wax::before { border-color: rgba(233, 223, 197, 0.3); border-style: solid; border-width: 1.5px; }
+.seal--wax::after  { border-color: rgba(0, 0, 0, 0.25); box-shadow: 0 1px 0 rgba(255, 190, 170, 0.25); }
+.seal--wax .seal__mark { color: rgba(233, 223, 197, 0.85); filter: drop-shadow(0 -1px 0 rgba(0, 0, 0, 0.4)); }
+.seal--sm { --seal-size: 4rem; }
+.seal--lg { --seal-size: 9rem; }
+
+
+/* ==========================================================================
+   12  STAMPS & SEALS (CSS impression system)
+   --------------------------------------------------------------------------
+   Anatomy
+     <div class="stamp stamp--rect stamp--red" style="--stamp-rot:-5deg">
+       <span class="stamp__main">Approved</span>
+     </div>
+   Shapes   : stamp--rect | stamp--round | stamp--oval
+   Colours  : stamp--red | --green | --teal | --blue | --black | --gold
+   Rotation : set --stamp-rot inline, or use stamp--r1 … stamp--r4
+   Scale    : set --stamp-size (e.g. style="--stamp-size:1.3rem") — everything
+              inside is in em, so the whole stamp scales together.
+   Text parts: __top, __main, __sub, __bottom, __date (all optional)
+   Motion   : add stamp--press, then add .is-stamped to play the impression
+              (see animations.css). Without JS the stamp is simply visible.
+
+   Realism: a mask built from two noise fields removes ink in speckles and
+   patches; mix-blend-mode: multiply lets paper texture show through.
+   ========================================================================== */
+.stamp {
+  --stamp-color: var(--oxide);
+  --stamp-rot: -6deg;
+  --stamp-size: 1rem;
+  --stamp-opacity: 0.9;
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  align-content: center;
+  gap: 0.15em;
+  font-size: var(--stamp-size);
+  font-family: var(--font-doc);
+  font-weight: var(--fw-bold);
+  line-height: 1.1;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--stamp-color);
+  opacity: var(--stamp-opacity);
+  mix-blend-mode: multiply;
+  transform: rotate(var(--stamp-rot));
+  pointer-events: none;
+  user-select: none;
+  -webkit-mask-image: var(--tx-ink-mask);
+          mask-image: var(--tx-ink-mask);
+  -webkit-mask-size: 260px 260px;
+          mask-size: 260px 260px;
+  z-index: var(--z-stamp);
+}
+.stamp__main   { font-size: 1.35em; letter-spacing: 0.18em; text-indent: 0.18em; text-wrap: balance; }
+.stamp__top,
+.stamp__bottom { font-size: 0.62em; letter-spacing: 0.3em; text-indent: 0.3em; }
+.stamp__sub    { font-size: 0.7em; letter-spacing: 0.22em; text-indent: 0.22em; font-family: var(--font-type); font-weight: var(--fw-regular); }
+.stamp__date   { font-size: 0.72em; letter-spacing: 0.12em; font-family: var(--font-type); font-weight: var(--fw-regular); }
+.stamp__stars  { font-size: 0.7em; letter-spacing: 0.4em; text-indent: 0.4em; }
+.stamp__stars::before { content: "\2605 \2605 \2605"; }   /* three star glyphs */
+
+/* Shapes */
+.stamp--rect {
+  padding: 0.45em 0.9em;
+  border: 0.2em solid currentColor;
+  border-radius: 0.2em;
+  outline: 0.07em solid currentColor;
+  outline-offset: 0.18em;
+}
+.stamp--round {
+  width: 9.5em;
+  aspect-ratio: 1;
+  padding: 1.4em 1.2em;
+  border: 0.22em solid currentColor;
+  border-radius: 50%;
+}
+.stamp--round::before {
+  content: "";
+  position: absolute;
+  inset: 0.5em;
+  border: 0.08em solid currentColor;
+  border-radius: 50%;
+}
+.stamp--round .stamp__main { font-size: 0.95em; letter-spacing: 0.06em; text-indent: 0.06em; white-space: nowrap; }
+.stamp--oval {
+  padding: 1.1em 2em;
+  border: 0.22em solid currentColor;
+  border-radius: 50%;
+  min-width: 14em;
+  aspect-ratio: 1.9 / 1;
+}
+.stamp--oval::before {
+  content: "";
+  position: absolute;
+  inset: 0.4em;
+  border: 0.08em solid currentColor;
+  border-radius: 50%;
+}
+.stamp--oval .stamp__main { font-size: 1.05em; letter-spacing: 0.08em; text-indent: 0.08em; white-space: nowrap; }
+
+/* Colours (ink on paper, never pure primaries) */
+.stamp--red   { --stamp-color: var(--oxide); }
+.stamp--green { --stamp-color: #35563A; }
+.stamp--teal  { --stamp-color: var(--stamp-teal); }
+.stamp--blue  { --stamp-color: var(--stamp-blue); }
+.stamp--black { --stamp-color: var(--ink); }
+.stamp--gold  { --stamp-color: #8C6F2B; }
+.surface-forest .stamp,
+.on-dark .stamp { mix-blend-mode: normal; --stamp-opacity: 0.88; }
+.surface-forest .stamp--red, .on-dark .stamp--red { --stamp-color: #C9786B; }
+.surface-forest .stamp--black, .on-dark .stamp--black { --stamp-color: var(--parchment); }
+
+/* Slightly irregular rotations: no two stamps sit the same way */
+.stamp--r1 { --stamp-rot: -9deg; }
+.stamp--r2 { --stamp-rot: -3deg; }
+.stamp--r3 { --stamp-rot: 4deg; }
+.stamp--r4 { --stamp-rot: 8deg; }
+
+/* Sizing helpers */
+.stamp--sm { --stamp-size: 0.75rem; }
+.stamp--lg { --stamp-size: 1.35rem; }
+
+/* Responsive scaling: stamps shrink with their container, never overflow */
+.stamp-wrap { container-type: inline-size; }
+@container (max-width: 20rem) { .stamp { --stamp-size: 0.8rem; } }
+
+/* Positioning on a document */
+.stamp--abs { position: absolute; }
+.stamp--tr { top: var(--sp-4); right: var(--sp-4); }
+.stamp--br { bottom: var(--sp-4); right: var(--sp-4); }
+.stamp--bl { bottom: var(--sp-4); left: var(--sp-4); }
+.stamp--tl { top: var(--sp-4); left: var(--sp-4); }
+
+/* A stamp as an <img> from assets/stamps/ */
+.stamp-img { width: var(--stamp-img-size, 9rem); height: auto; transform: rotate(var(--stamp-rot, -6deg)); mix-blend-mode: multiply; opacity: 0.92; }
+
+
+/* ==========================================================================
+   13  ENVELOPE (structure — the opening motion is in animations.css)
+   <div class="envelope"> .envelope__back, .envelope__letter, .envelope__front,
+   .envelope__flap, .envelope__seal. Toggle .is-open to open it.
+   ========================================================================== */
+.envelope {
+  --env-color: #CDBB90;
+  --env-color-dark: #B9A577;
+  position: relative;
+  width: min(100%, 22rem);
+  aspect-ratio: 3 / 2;
+  margin-top: 3.5rem;                 /* room for the flap to open upwards */
+  perspective: 900px;
+}
+.envelope__back,
+.envelope__front,
+.envelope__flap,
+.envelope__letter { position: absolute; }
+.envelope__back {
+  inset: 0;
+  background-color: var(--env-color-dark);
+  background-image: var(--tx-fibers), var(--tx-grain);
+  background-size: 420px 420px, 240px 240px;
+  box-shadow: var(--shadow-2);
+  z-index: 0;
+}
+.envelope__letter {
+  inset: 6% 7% 8% 7%;
+  padding: var(--sp-3);
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  background-color: var(--dusty-cream);
+  background-image: var(--tx-fibers);
+  background-size: 420px 420px;
+  border: 1px solid var(--border-soft);
+  box-shadow: 0 -1px 3px rgba(41, 41, 31, 0.2);
+}
+.envelope__front {
+  inset: 0;
+  z-index: 2;
+  background-color: var(--env-color);
+  background-image: var(--tx-fibers), var(--tx-grain);
+  background-size: 420px 420px, 240px 240px;
+  clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
+}
+.envelope__flap {
+  inset: 0 0 auto 0;
+  height: 55%;
+  z-index: 3;
+  background-color: var(--env-color);
+  background-image: var(--tx-fibers), var(--tx-grain);
+  background-size: 420px 420px, 240px 240px;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+}
+.envelope__seal {
+  position: absolute;
+  left: 50%; top: 55%;
+  z-index: 4;
+  transform: translate(-50%, -50%);
+  --seal-size: 3.2rem;
+}
+button.envelope__seal { border: 0; padding: 0; cursor: pointer; }
+
+
+/* ==========================================================================
+   14  ICONS
+   Monochrome SVGs coloured with currentColor via mask-image.
+   <span class="icon icon--star" aria-hidden="true"></span>
+   ========================================================================== */
+.icon {
+  display: inline-block;
+  flex: none;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.12em;
+  background-color: currentColor;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+          mask: var(--icon) center / contain no-repeat;
+}
+.icon--star     { --icon: url("../assets/icons/star.svg"); }
+.icon--compass  { --icon: url("../assets/icons/compass.svg"); }
+.icon--plane    { --icon: url("../assets/icons/plane.svg"); }
+.icon--envelope { --icon: url("../assets/icons/envelope.svg"); }
+.icon--pin      { --icon: url("../assets/icons/pin.svg"); }
+.icon--key      { --icon: url("../assets/icons/key.svg"); }
+.icon--lg { font-size: 1.6em; }
+.icon--xl { font-size: 2.4em; }
+
+
+/* ==========================================================================
+   15  UTILITIES
+   ========================================================================== */
+.relative { position: relative; }
+.on-dark { color: var(--text-inverse); }
+.mt-0 { margin-top: 0 !important; }
+.mt-4 { margin-top: var(--sp-4) !important; }
+.mt-5 { margin-top: var(--sp-5) !important; }
+.mt-6 { margin-top: var(--sp-6) !important; }
+.mb-4 { margin-bottom: var(--sp-4) !important; }
+.p-5  { padding: var(--sp-5) !important; }
+.no-print-shadow { box-shadow: none !important; }
+
+@media print {
+  body { background: #fff; }
+  .card, .card--passport, .card--document { box-shadow: none; }
+  .stamp { mix-blend-mode: normal; }
+}

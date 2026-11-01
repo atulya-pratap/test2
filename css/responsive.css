@@ -1,0 +1,156 @@
+/* ==========================================================================
+   THE SANIYA ARCHIVE — responsive.css
+   Stage 02 · Responsive rules
+   --------------------------------------------------------------------------
+   MOBILE FIRST. The mobile layout is the baseline defined in style.css
+   (the site is reached mainly by scanning a QR code on a phone). This file
+   only adds or adjusts things as the screen gets bigger, plus one rule for
+   very small phones.
+
+   Breakpoints (CSS custom properties cannot be used inside @media, so these
+   values are the single source of truth — use them verbatim):
+
+     xs   max-width: 359px      small phones (iPhone SE 1st gen, compact Android)
+     base 360px – 599px         standard phones                      [default]
+     sm   min-width: 600px      large phones / landscape / small tablets
+     md   min-width: 768px      tablets
+     lg   min-width: 1024px     laptops & desktops
+     xl   min-width: 1280px     large desktops
+
+   Contents
+     01  Small phones (xs)
+     02  Touch & input capabilities
+     03  sm  ≥ 600px
+     04  md  ≥ 768px
+     05  lg  ≥ 1024px
+     06  xl  ≥ 1280px
+     07  Orientation, height & preferences
+   ========================================================================== */
+
+
+/* ==========================================================================
+   01  SMALL PHONES  (≤ 359px)
+   Tighten padding, drop heavy decoration, keep every target tappable.
+   ========================================================================== */
+@media (max-width: 359px) {
+  :root {
+    --gutter: 0.875rem;
+    --card-pad: var(--sp-4);
+    --fs-body: 1.18rem;
+    --fs-hand: 1.7rem;
+  }
+  .btn { padding-inline: 1rem; letter-spacing: 0.1em; }
+  .btn--block { width: 100%; }
+  .stamp { --stamp-size: 0.85rem; }
+  .stamp--lg { --stamp-size: 1.05rem; }
+  .card--passport { --star-size: 0.9rem; }
+  .doc-field { flex-direction: column; align-items: stretch; gap: 0; }
+  .doc-field__value { text-align: left; }
+  .serial { font-size: 1rem; }
+  .card--polaroid { max-width: 15rem; }
+  .frame-stars { --star-size: 1rem; }
+  .seal { --seal-size: 5.2rem; }
+}
+
+
+/* ==========================================================================
+   02  TOUCH & INPUT CAPABILITIES
+   ========================================================================== */
+@media (pointer: coarse) {
+  :root { --touch-min: 52px; }          /* generous targets for thumbs */
+  .btn--sm { min-height: 48px; }
+  .btn + .btn { margin-top: 0; }
+  .cluster { --cluster-gap: var(--sp-4); }   /* keep tappable things apart */
+}
+
+
+/* ==========================================================================
+   03  SM — ≥ 600px  (large phones, landscape, small tablets)
+   ========================================================================== */
+@media (min-width: 600px) {
+  :root {
+    --gutter: 1.5rem;
+    --card-pad: var(--sp-6);
+  }
+  .grid--2,
+  .grid--3,
+  .grid--4 { grid-template-columns: repeat(2, 1fr); }
+
+  /* The licence card goes landscape: photo left, fields right */
+  .passport__layout { grid-template-columns: minmax(10rem, 0.8fr) 1.3fr; align-items: start; }
+
+  .btn--block-sm-up { display: inline-flex; width: auto; }
+}
+
+
+/* ==========================================================================
+   04  MD — ≥ 768px  (tablets)
+   ========================================================================== */
+@media (min-width: 768px) {
+  :root {
+    --gutter: 2rem;
+    --section-space: clamp(4rem, 3rem + 4vw, 6.5rem);
+  }
+  .grid--3,
+  .grid--4 { grid-template-columns: repeat(3, 1fr); }
+
+  .card--ticket { display: grid; grid-template-columns: 1fr auto; column-gap: var(--sp-6); }
+  .ticket__stub { margin-top: 0; padding-top: 0; border-top: 0; padding-left: var(--sp-5); border-left: 2px dashed var(--border-ink); }
+  .card--ticket { --stub-y: 50%; }
+
+  .stamp { --stamp-size: 1.1rem; }
+  .stamp--lg { --stamp-size: 1.5rem; }
+  .stamp--sm { --stamp-size: 0.85rem; }
+
+  .doc-footer { flex-wrap: nowrap; }
+}
+
+
+/* ==========================================================================
+   05  LG — ≥ 1024px  (laptops & desktops)
+   Desktop is a supporting layout: content stays a comfortable reading width
+   rather than stretching, so it still feels like a document.
+   ========================================================================== */
+@media (min-width: 1024px) {
+  :root {
+    --gutter: 2.5rem;
+    --fs-body: 1.3rem;
+  }
+  .grid--4 { grid-template-columns: repeat(4, 1fr); }
+  .passport__layout { gap: var(--sp-6); }
+  .card--passport { --star-size: 1.3rem; }
+  .frame-stars { --star-size: 1.5rem; }
+}
+
+
+/* ==========================================================================
+   06  XL — ≥ 1280px
+   ========================================================================== */
+@media (min-width: 1280px) {
+  :root { --gutter: 3rem; }
+  .container--max { width: min(100% - 2 * var(--gutter), 80rem); }
+}
+
+
+/* ==========================================================================
+   07  ORIENTATION, HEIGHT & PREFERENCES
+   ========================================================================== */
+/* Short landscape phones: reduce vertical padding so content isn't buried */
+@media (orientation: landscape) and (max-height: 480px) {
+  :root { --section-space: 2rem; }
+  .envelope { margin-top: 2.5rem; }
+}
+
+/* Reduce-data / print */
+@media (prefers-contrast: more) {
+  :root {
+    --border-soft: rgba(41, 41, 31, 0.6);
+    --text-muted: var(--ink-soft);
+  }
+  .stamp { --stamp-opacity: 1; }
+}
+
+@media print {
+  .no-print { display: none !important; }
+  :root { --section-space: 1.5rem; }
+}
