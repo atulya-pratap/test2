@@ -343,8 +343,8 @@
   // This function is automatically called by the YT API script once loaded.
   window.onYouTubeIframeAPIReady = function() {
     player = new YT.Player('yt-player-container', {
-      height: '0',
-      width: '0',
+      height: '1',
+      width: '1',
       videoId: tracklist[0].youtubeId,
       playerVars: {
         'playsinline': 1,
