@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#29372C">
+  <title>Main Dashboard · The Saniya Archive</title>
+  <meta name="description" content="Central archive index for the International Department of Unscheduled Adventures.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@600;700;800&family=Reenie+Beanie&family=Special+Elite&display=swap" rel="stylesheet">
+
+  <!-- Core Design System -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  
+  <!-- Dashboard Specific Styles -->
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="surface-grain page-enter">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <!-- A. ARCHIVE HEADER -->
+  <header class="archive-header surface-forest">
+    <div class="container container--max header-inner">
+      <div class="header-brand">
+        <span class="icon icon--compass icon--lg header-emblem" aria-hidden="true"></span>
+        <div class="header-titles">
+          <h1 class="t-label text-inverse">The Saniya Archive</h1>
+          <p class="t-meta text-inverse-muted">I.D.U.A. // Travel License Division</p>
+        </div>
+      </div>
+      <div class="header-meta">
+        <span class="badge badge--classified badge--solid">DOC: TTC6252021</span>
+        <span class="header-indicator">SECTOR: DASHBOARD</span>
+      </div>
+    </div>
+  </header>
+
+  <main id="main-content" class="container container--max section">
+    
+    <!-- B. WELCOME SECTION -->
+    <section class="welcome-section surface-parchment border-ink frame-corners mb-6 lift">
+      <div class="welcome-content">
+        <p class="t-eyebrow">Personal Archive // Established 2026</p>
+        <h2 class="t-display mt-4">Welcome, Saniya.</h2>
+        <h3 class="t-subhead mt-2">Your next adventure has no fixed destination.</h3>
+        <p class="t-body mt-4 prose">
+          Every journey leaves something behind — a photograph, a song, a ridiculous story, or a memory worth keeping. This is where those little things belong. The archive is officially open and awaiting your unscheduled detours.
+        </p>
+        <div class="mt-5">
+          <span class="badge badge--approved badge--solid">CURRENT STATUS: READY FOR DEPARTURE</span>
+        </div>
+      </div>
+      <div class="welcome-decoration" aria-hidden="true">
+        <!-- Abstract compass/globe motif constructed with borders -->
+        <div class="deco-globe">
+          <div class="deco-ring deco-ring-1"></div>
+          <div class="deco-ring deco-ring-2"></div>
+          <span class="icon icon--star deco-star"></span>
+        </div>
+      </div>
+    </section>
+
+    <div class="dashboard-layout grid mt-6">
+      
+      <!-- LEFT COLUMN: Identity & Stats -->
+      <aside class="dashboard-sidebar stack stack--lg stagger js-reveal">
+        
+        <!-- C. TRAVELER PROFILE PANEL -->
+        <article class="card--passport frame-stars border-ink-2 lift" style="--star-size: 1rem; background-color: var(--parchment);">
+          <div class="doc-header" style="border-bottom:0; margin-bottom: var(--sp-2); padding-bottom: 0;">
+            <p class="passport__title">Traveler Identity</p>
+            <p class="passport__number">NO. TTC6252021</p>
+          </div>
+          <div class="passport-profile-layout mt-4">
+            <figure class="photo-frame">
+              <!-- Placeholder for real photo -->
+              <div class="photo-frame__image polaroid-placeholder" role="img" aria-label="Photograph placeholder">
+                <span class="icon icon--compass"></span>
+              </div>
+              <figcaption>Authorized traveler</figcaption>
+            </figure>
+            <div class="profile-details">
+              <div class="doc-field"><span class="doc-field__label">Name</span><span class="doc-field__value doc-field__value--typed">Saniya</span></div>
+              <div class="doc-field"><span class="doc-field__label">Authority</span><span class="doc-field__value doc-field__value--typed">I.D.U.A.</span></div>
+              <div class="doc-field"><span class="doc-field__label">Status</span><span class="doc-field__value doc-field__value--typed t-accent">ACTIVE</span></div>
+              <div class="doc-field"><span class="doc-field__label">Est.</span><span class="doc-field__value doc-field__value--typed">2026</span></div>
+            </div>
+          </div>
+          <div class="signature-block signature-block--center mt-5" style="margin-inline: auto;">
+            <span class="signature-block__ink" style="font-size: 2rem;">Saniya</span>
+            <div class="signature-block__line"></div>
+            <p class="signature-block__caption">Digital Signature</p>
+          </div>
+          <div class="mt-5 t-center">
+            <a href="identity.html" class="btn btn--secondary btn--sm btn--block archive-link" data-id="identity">
+              View Travel Credentials →
+            </a>
+          </div>
+        </article>
+
+        <!-- E. DOCUMENT STATISTICS -->
+        <article class="card card--document lift">
+          <h3 class="card__title t-center mb-4">Records & Statistics</h3>
+          <div class="divider divider--dotted"></div>
+          <ul id="stats-container" class="stats-list stack stack--sm mt-4">
+            <!-- Populated by JS -->
+          </ul>
+        </article>
+
+      </aside>
+
+      <!-- RIGHT COLUMN: Navigation, Featured, Progress -->
+      <div class="dashboard-main stack stack--lg stagger js-reveal" style="--delay: 0.1s;">
+        
+        <!-- D. ARCHIVE NAVIGATION -->
+        <section>
+          <div class="section-heading flex-between mb-4">
+            <h3 class="t-label t-accent">Archive Departments</h3>
+            <span class="t-meta text-muted">INDEX VOL. 1</span>
+          </div>
+          <div id="departments-container" class="grid grid--2 archive-departments">
+            <!-- Populated by JS -->
+          </div>
+        </section>
+
+        <div class="divider divider--ornate"><span class="divider__diamond"></span></div>
+
+        <!-- F. FEATURED DOCUMENTS -->
+        <section>
+          <div class="section-heading flex-between mb-4">
+            <h3 class="t-label t-accent">Currently Featured</h3>
+            <span class="t-meta text-muted">REGISTRY HIGHLIGHTS</span>
+          </div>
+          <div id="featured-container" class="grid grid--3 featured-grid">
+            <!-- Populated by JS -->
+          </div>
+        </section>
+
+        <!-- G. ARCHIVE PROGRESS -->
+        <section class="mt-6">
+          <article class="card surface-aged border-dashed lift">
+            <h3 class="card__title mb-4">Archive Completion Record</h3>
+            <p class="t-body-sm text-muted mb-4">Tracking the physical assembly and digital transfer of the archive's internal departments.</p>
+            <div id="progress-container" class="progress-tracker grid grid--2">
+              <!-- Populated by JS -->
+            </div>
+          </article>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Dynamic Toast Container for pending sections -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
