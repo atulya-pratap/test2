@@ -22,7 +22,7 @@
       artist: "Ranbir Kapoor, Deepika Padukone | T-Series",
       album: "Tamasha",
       description: "A track for the beginning of an unexpectedly good day.",
-      youtubeId: "v7K4vGYL9zI" // Example standard ID to prevent API crash, replace freely.
+      youtubeId: "sOhESxhibAM" // Example standard ID to prevent API crash, replace freely.
     },
     {
       id: "trk-02",
@@ -32,7 +32,7 @@
       artist: "Ranbir Kapoor, Nargis Fakhri | A.R. Rahman, Mohit Chauhan",
       album: "Rockstar",
       description: "For the journey that takes longer than expected, but feels exactly right.",
-      youtubeId: "2mqTOQEAFLc"
+      youtubeId: "2mWaqsC3U7k"
     },
     {
       id: "trk-03",
@@ -42,7 +42,7 @@
       artist: "LAMAN | Bhole Baba | Official song | Folk Himachal",
       album: "Folk Himachal",
       description: "A grounded, traditional rhythm to center the mind during long stretches of road.",
-      youtubeId: "PLACEHOLDER_03"
+      youtubeId: "BArlCOQ__ug"
     },
     {
       id: "trk-04",
