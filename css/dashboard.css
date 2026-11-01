@@ -1,0 +1,217 @@
+/* ==========================================================================
+   THE SANIYA ARCHIVE — dashboard.css
+   Stage 04 · Main Dashboard Specific Styles
+   --------------------------------------------------------------------------
+   Layout constraints for the main hub. Connects to style.css tokens.
+   ========================================================================== */
+
+/* ---- A. Header ---- */
+.archive-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  border-bottom: 2px solid var(--border-on-dark);
+  box-shadow: var(--shadow-2);
+}
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 4rem;
+  padding-block: var(--sp-2);
+}
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.header-emblem {
+  color: var(--gold-light);
+  font-size: 2rem;
+}
+.header-indicator {
+  font-family: var(--font-doc);
+  font-size: var(--fs-label);
+  color: var(--text-inverse-muted);
+  letter-spacing: var(--ls-wide);
+  padding-left: var(--sp-3);
+  border-left: 1px solid var(--border-on-dark);
+}
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+/* ---- B. Welcome Section ---- */
+.welcome-section {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  padding: var(--sp-6);
+}
+.welcome-content {
+  position: relative;
+  z-index: 2;
+  max-width: 40rem;
+}
+.welcome-decoration {
+  position: absolute;
+  right: -2rem;
+  bottom: -4rem;
+  z-index: 1;
+  opacity: 0.15;
+  pointer-events: none;
+}
+.deco-globe {
+  position: relative;
+  width: 24rem;
+  height: 24rem;
+}
+.deco-ring {
+  position: absolute;
+  inset: 0;
+  border: 4px solid var(--ink);
+  border-radius: 50%;
+}
+.deco-ring-1 { transform: rotateX(60deg) rotateY(20deg); }
+.deco-ring-2 { transform: rotateX(110deg) rotateY(45deg); border-style: dashed; }
+.deco-star {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 4rem;
+  color: var(--oxide);
+}
+
+/* ---- C. Layout Grids ---- */
+.dashboard-layout {
+  align-items: start; /* prevents columns from stretching vertically */
+}
+.passport-profile-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-4);
+}
+.polaroid-placeholder {
+  display: grid;
+  place-items: center;
+  background: var(--surface-sunken);
+  color: var(--text-muted);
+  font-size: 2rem;
+}
+
+/* ---- D. Statistics & Progress ---- */
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px dotted var(--border-soft);
+  padding-bottom: var(--sp-2);
+}
+.stat-value {
+  font-family: var(--font-type);
+  font-weight: var(--fw-bold);
+  font-size: 1.2rem;
+  color: var(--forest);
+}
+.progress-item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  font-family: var(--font-doc);
+  font-size: var(--fs-meta);
+}
+.progress-item::before {
+  content: "—";
+  color: var(--border-soft);
+}
+.progress-item.is-complete {
+  color: var(--ink);
+  font-weight: var(--fw-bold);
+}
+.progress-item.is-complete::before {
+  content: "✓";
+  color: var(--success);
+}
+.progress-item.is-pending {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* ---- E. Dynamic Department Cards ---- */
+.dept-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  height: 100%;
+}
+.dept-card:hover {
+  text-decoration: none;
+}
+.dept-icon {
+  font-size: 2rem;
+  margin-bottom: var(--sp-3);
+}
+.dept-card--classified {
+  cursor: help;
+}
+
+/* ---- F. Toasts (System Messages) ---- */
+.toast-container {
+  position: fixed;
+  bottom: var(--sp-5);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  pointer-events: none;
+}
+.system-toast {
+  padding: var(--sp-3) var(--sp-5);
+  background-color: var(--dusty-cream);
+  border: 1px solid var(--ink);
+  box-shadow: var(--shadow-floating);
+  font-family: var(--font-doc);
+  font-size: var(--fs-meta);
+  font-weight: var(--fw-bold);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  color: var(--oxide);
+  animation: toast-enter 0.4s var(--ease-paper) forwards, toast-exit 0.4s var(--ease-paper) 3.5s forwards;
+}
+
+@keyframes toast-enter {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes toast-exit {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-10px); }
+}
+
+/* ---- G. Responsive Adjustments ---- */
+@media (max-width: 767px) {
+  .header-meta { display: none; } /* Hide complex header elements on small screens */
+  .header-emblem { font-size: 1.5rem; }
+  .dashboard-layout { grid-template-columns: 1fr; }
+  .passport-profile-layout { grid-template-columns: 8rem 1fr; }
+}
+@media (min-width: 768px) {
+  .passport-profile-layout { grid-template-columns: 1fr; } /* Stack photo and details in sidebar */
+}
+@media (min-width: 1024px) {
+  .dashboard-layout {
+    grid-template-columns: 340px 1fr;
+    gap: var(--sp-6);
+  }
+  .welcome-section {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
