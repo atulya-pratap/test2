@@ -1,0 +1,132 @@
+/* ==========================================================================
+   THE SANIYA ARCHIVE — portal.css
+   Stage 03 · Immigration Portal Specific Styles
+   --------------------------------------------------------------------------
+   Contains the layout for the opening sequence, phase transitions, and 
+   the scanner line effect. Relies entirely on style.css for design tokens.
+   ========================================================================== */
+
+/* 1. Portal Wrapper & Phase Management */
+.portal-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.portal-phase {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.8s var(--ease-paper), visibility 0.8s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.portal-phase.is-active {
+  opacity: 1;
+  pointer-events: auto;
+  visibility: visible;
+  z-index: 10;
+}
+
+/* 2. Skip Button */
+.skip-intro-btn {
+  position: absolute;
+  top: var(--sp-4);
+  right: var(--sp-4);
+  z-index: var(--z-sticky);
+  font-size: var(--fs-meta);
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+}
+.skip-intro-btn:hover { opacity: 1; }
+.no-js .skip-intro-btn { display: none; } /* Hide if sequence won't run anyway */
+
+/* 3. Terminal Screen (Phase 1) */
+.terminal-box {
+  width: 100%;
+  padding: var(--sp-6) var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.terminal-line {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.terminal-line.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.blink-text {
+  animation: text-pulse 1.5s infinite var(--ease-paper);
+}
+@keyframes text-pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* 4. Document Scanner Overlay */
+#auth-document {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease-out; /* For the stamp 'thud' effect */
+}
+.scanner-line {
+  position: absolute;
+  left: 0; 
+  right: 0; 
+  top: -10px;
+  height: 3px;
+  background: var(--stamp-teal);
+  box-shadow: 0 0 14px 2px var(--stamp-teal), 0 0 4px var(--stamp-teal);
+  opacity: 0;
+  z-index: var(--z-overlay);
+  pointer-events: none;
+}
+.scanner-line.is-scanning {
+  animation: scan-pass 2.2s cubic-bezier(0.4, 0.0, 0.2, 1) forwards;
+}
+
+@keyframes scan-pass {
+  0%   { top: 0; opacity: 0; }
+  10%  { opacity: 0.8; }
+  50%  { opacity: 0.9; }
+  90%  { opacity: 0.8; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* 5. Action Area (Phase 3 Final State) */
+.action-area {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s var(--ease-paper), transform 0.8s var(--ease-paper);
+}
+.action-area.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.btn--lg {
+  padding: 1rem 2.5rem;
+  font-size: var(--fs-label);
+}
+
+/* 6. Fallback (No-JS / Reduced Motion Bypass) */
+.no-js #phase-terminal { display: none; }
+.no-js #phase-document { position: relative; opacity: 1; visibility: visible; pointer-events: auto; }
+.no-js .action-area { opacity: 1; transform: translateY(0); }
+.no-js #status-badge { 
+  background-color: var(--info-wash); 
+  color: var(--stamp-teal); 
+  border-color: var(--stamp-teal); 
+}
+.no-js #status-badge::before { content: "VERIFIED"; }
