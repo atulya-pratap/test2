@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#29372C">
+  <title>Soundtrack Archive · The Saniya Archive</title>
+  <meta name="description" content="A personal music collection belonging to the fictional travel archive.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@600;700;800&family=Reenie+Beanie&family=Special+Elite&display=swap" rel="stylesheet">
+
+  <!-- Core Design System -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/animations.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  
+  <!-- Soundtrack Specific Styles -->
+  <link rel="stylesheet" href="css/soundtrack.css">
+</head>
+<body class="surface-grain page-enter">
+  <a class="skip-link" href="#soundtrack-main">Skip to soundtrack</a>
+
+  <!-- A. ARCHIVE HEADER -->
+  <header class="archive-header surface-forest no-print">
+    <div class="container container--max header-inner">
+      <div class="header-brand">
+        <a href="dashboard.html" class="btn btn--secondary btn--sm on-dark" style="border-color: var(--border-on-dark); color: var(--text-inverse-muted);" aria-label="Return to Dashboard">
+          ← <span class="t-doc hidden-mobile" style="margin-left: 0.5rem;">DASHBOARD</span>
+        </a>
+      </div>
+      <div class="header-meta">
+        <span class="header-indicator">SECTOR: SOUNDTRACK ARCHIVE</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN SOUNDTRACK VIEW -->
+  <main id="soundtrack-main" class="container container--max section">
+    
+    <!-- B. INTRODUCTION -->
+    <section class="registry-intro flex-between mb-6 stagger js-reveal">
+      <div class="intro-text" style="max-width: 38rem;">
+        <p class="t-eyebrow">Department 03 // Dept. of Musical Accompaniment</p>
+        <h1 class="t-display mt-2">The Unplanned Journey</h1>
+        <p class="t-subhead mt-2">"Some journeys are remembered by the places we visited. Others are remembered by the songs that happened to be playing."</p>
+      </div>
+      <div class="intro-meta surface-parchment border-ink p-4 frame-corners" style="min-width: 16rem;">
+        <div class="doc-field"><span class="doc-field__label">MIXTAPE VOL.</span><span class="t-doc font-bold">01</span></div>
+        <div class="doc-field"><span class="doc-field__label">ESTABLISHED</span><span class="t-doc font-bold">2026</span></div>
+        <div class="doc-field"><span class="doc-field__label">CURATED FOR</span><span class="t-hand t-accent" style="font-size: 1.6rem; transform: translateY(4px); display: inline-block;">Saniya</span></div>
+      </div>
+    </section>
+
+    <div class="grid grid--custom mt-6 js-reveal">
+      
+      <!-- C. THE LISTENING ROOM (Left Column) -->
+      <div class="listening-room stack stack--lg">
+        
+        <!-- 1. Original Vintage Album Cover -->
+        <div class="album-cover-wrapper lift" aria-label="Album cover: The Unplanned Journey">
+          <div class="album-cover">
+            <!-- CSS Illustrated Artwork -->
+            <div class="album-art-sun"></div>
+            <div class="album-art-road"></div>
+            <!-- Cover Typography -->
+            <div class="album-cover-text t-center">
+              <p class="t-doc t-caps mb-1" style="font-size: 0.65rem; letter-spacing: 0.2em; color: rgba(41,41,31,0.6);">Personal Mixtape — Vol. 01</p>
+              <h2 class="t-display" style="color: var(--forest-deep); line-height: 1; font-size: 2.2rem;">The Unplanned<br>Journey</h2>
+              <div class="divider divider--dotted" style="border-color: rgba(41,41,31,0.3); margin-block: 0.5rem;"></div>
+              <p class="t-label" style="color: var(--ink);">CURATED FOR SANIYA // TTC6252021</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. The Interactive Cassette Player -->
+        <div class="cassette-deck surface-aged border-ink-2 frame-corners">
+          
+          <div class="cassette-physical mb-4" id="cassette-visual">
+            <div class="cassette-shell">
+              <div class="cassette-screws top-left"></div>
+              <div class="cassette-screws top-right"></div>
+              <div class="cassette-screws bottom-left"></div>
+              <div class="cassette-screws bottom-right"></div>
+              
+              <div class="cassette-label surface-parchment border-ink">
+                <div class="label-header flex-between mb-1">
+                  <span class="t-doc t-caps" style="font-size: 0.55rem; font-weight: bold;">I.D.U.A Audio Dept.</span>
+                  <span class="t-doc font-bold" style="font-size: 0.65rem;">VOL 01</span>
+                </div>
+                <div class="label-title t-center mb-1">
+                  <span class="t-hand" style="font-size: 1.5rem; line-height: 1; color: var(--oxide);">The Unplanned Journey</span>
+                </div>
+                
+                <div class="tape-window border-ink">
+                  <div class="reel reel-left"><div class="reel-teeth"></div></div>
+                  <div class="tape-bridge"></div>
+                  <div class="reel reel-right"><div class="reel-teeth"></div></div>
+                </div>
+
+                <div class="label-footer mt-2 t-center">
+                  <p class="t-note text-muted" style="font-size: 0.8rem;" id="cassette-status">READY FOR PLAYBACK</p>
+                </div>
+              </div>
+              <div class="cassette-bottom-trap"></div>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="cassette-controls flex-between">
+            <button class="btn btn--doc control-btn" id="btn-prev" aria-label="Previous Track">
+              <span class="control-icon">⏮</span>
+            </button>
+            <button class="btn btn--primary control-btn play-btn" id="btn-play-pause" aria-label="Play or Pause">
+              <span class="control-icon" id="play-icon">▶</span>
+            </button>
+            <button class="btn btn--doc control-btn" id="btn-next" aria-label="Next Track">
+              <span class="control-icon">⏭</span>
+            </button>
+            <button class="btn btn--text control-btn eject-btn" id="btn-eject" aria-label="Eject Cassette">
+              <span class="t-label text-muted" style="font-size: 0.6rem;">DO NOT EJECT ⏏</span>
+            </button>
+          </div>
+
+          <!-- Invisible YouTube Player Target -->
+          <div id="yt-player-container" style="display: none;"></div>
+          <p class="t-meta text-muted t-center mt-3" style="font-size: 0.65rem;">PLAYBACK SYNCHRONIZED VIA YOUTUBE API</p>
+
+        </div>
+
+        <!-- 3. Listening Notes (Revealed on play) -->
+        <article class="listening-notes surface-certificate border-dashed p-5 lift" id="listening-notes-card">
+          <div class="flex-between mb-3">
+            <h3 class="t-label t-accent">Listening Notes</h3>
+            <span class="badge badge--classified" id="track-id-badge">TRK-00</span>
+          </div>
+          <h4 class="t-display mb-1" id="note-title" style="font-size: 1.4rem;">Select a Track</h4>
+          <p class="t-meta text-muted mb-3" id="note-artist">—</p>
+          <div class="divider divider--dotted"></div>
+          <p class="t-note text-secondary mt-3" id="note-description">Insert cassette and initiate playback to view archival track notes.</p>
+          
+          <div class="mt-4 pt-3 flex-between" style="border-top: 1px solid var(--border-soft);">
+            <a href="#" target="_blank" rel="noopener noreferrer" id="external-link-btn" class="btn btn--text btn--sm" style="display: none;">Open Original Source ↗</a>
+          </div>
+        </article>
+
+      </div>
+
+      <!-- D. THE MIXTAPE INSERT (Right Column: Tracklist) -->
+      <div class="mixtape-insert surface-parchment border-ink frame-corners p-5 shadow-floating">
+        <header class="doc-header mb-5" style="border-bottom: 2px dashed var(--border-ink); padding-bottom: var(--sp-3);">
+          <h3 class="t-doc font-bold t-caps" style="font-size: 1.1rem; letter-spacing: 0.1em;">Archive Tracklist</h3>
+          <p class="t-meta text-muted mt-1">THE SANIYA ARCHIVE // VOL. 01</p>
+        </header>
+
+        <!-- Side A -->
+        <div class="tracklist-side mb-5">
+          <h4 class="t-label t-accent mb-3" style="font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span class="side-badge border-ink">A</span> THE JOURNEY BEGINS
+          </h4>
+          <ul class="tracklist-ul" id="tracklist-side-a">
+            <!-- Populated via JS -->
+          </ul>
+        </div>
+
+        <!-- Side B -->
+        <div class="tracklist-side">
+          <h4 class="t-label t-accent mb-3" style="font-size: 0.9rem; display: flex; align-items: center; gap: 0.5rem;">
+            <span class="side-badge border-ink">B</span> THE WAY BACK
+          </h4>
+          <ul class="tracklist-ul" id="tracklist-side-b">
+            <!-- Populated via JS -->
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Easter Egg Toast Container -->
+  <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+  <!-- Load YouTube IFrame API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="js/soundtrack.js"></script>
+</body>
+</html>
